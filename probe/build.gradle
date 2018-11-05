@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+    }
+}
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'com.jfrog.bintray'
+[compileJava, compileTestJava, compileGroovy]*.options*.encoding = 'UTF-8'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    compile "com.android.tools.build:transform-api:1.5.0"
+    implementation "com.android.tools.build:gradle:3.2.1"
+    implementation "commons-io:commons-io:2.4"
+}
+repositories {
+    mavenCentral()
+}
+group = "com.hannibal.gradle"//project属性
+version = "1.0.1"//project属性
+uploadArchives {
+//    version = version + '-SNAPSHOT'//if you are testing the demo I provide locally, you can uncomment this.
+    //本地仓库的一种
+    repositories{
+        flatDir{
+            name "localRepository"
+            dir "localRepository/libs"
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from project.file('src/main/groovy')
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+}
+Properties properties = new Properties()
+boolean isHasFile = false
+if (project.rootProject.file('local.properties').exists()){
+    isHasFile = true
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    println "1 hasfile:$isHasFile"
+}

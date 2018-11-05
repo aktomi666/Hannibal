@@ -1,0 +1,64 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.sk.hannibal"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation project(':scalpel')
+}
+
+apply plugin: 'hannibal'
+import com.hannibal.gradle.utils.MethodLogAdapter
+import org.objectweb.asm.ClassVisitor
+import org.objectweb.asm.MethodVisitor
+import org.objectweb.asm.Opcodes
+//import org.objectweb.asm.*
+
+hannibal {
+    //下面这个参数仅仅影响log输出，为本次修改命名，无实际意义，不配置也可以
+    hannibalModifyName = 'HannibalTest'
+    //设置为true可以显示帮助内容，默认为true
+    showHelp = true
+    //keepQuiet默认为false,为true时不会有字节码修改的log输出，建议为false
+    keepQuiet = false
+    //下面的参数设置为true时会输出工程编译耗时信息
+    watchTimeConsume = false
+
+    //this is the most important part
+    modifyMatchMaps = [
+            '*MainActivity': [
+                    ['methodName': 'onClick', 'methodDesc': null, 'adapter': {
+                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
+                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
+                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
+                                @Override
+                                void visitCode() {
+                                    super.visitCode();
+                                    //methodVisitor.visitLdcInsn(desc);
+                                    methodVisitor.visitVarInsn(25, 1);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/sk/hannibal/MainActivity", "hookClickEvents", "(Landroid/view/View;)V", false);
+                                }
+                            }
+                            return adapter;
+                    }]
+            ]
+    ]
+}

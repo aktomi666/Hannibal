@@ -39,7 +39,7 @@ public class ModifyFiles {
         def stream = zipFile.getInputStream(element);
         def array = IOUtils.toByteArray(stream);
         String hex = DigestUtils.md5Hex(element.getName());
-        final File tempDir = DataHelper.ext.hiBeaverTempDir;
+        final File tempDir = DataHelper.ext.hannibalTempDir;
         File targetFile = new File(tempDir, hex + ".jar");
         if (targetFile.exists()) {
             targetFile.delete()
@@ -96,12 +96,12 @@ public class ModifyFiles {
     }
 
     public static void modifyAar(File targetFile, Map<String, Object> map) {
-        final File hiBeaverDir = DataHelper.ext.hiBeaverDir;
-        final File tempDir = DataHelper.ext.hiBeaverTempDir;
+        final File hannibalDir = DataHelper.ext.hannibalDir;
+        final File tempDir = DataHelper.ext.hannibalTempDir;
         ZipFile zipFile = new ZipFile(targetFile);
         Enumeration<ZipEntry> entries = zipFile.entries();
 
-        def outputAar = new File(hiBeaverDir, targetFile.name)
+        def outputAar = new File(hannibalDir, targetFile.name)
         if (outputAar.exists()) {
             outputAar.delete()
         }

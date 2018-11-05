@@ -143,7 +143,7 @@ public class InjectTransform extends Transform {
 
 
     private static void saveModifiedJarForCheck(File optJar) {
-        File dir = DataHelper.ext.hannibalDir;
+        File dir = DataHelper.ext.HannibalDir;
         File checkJarFile = new File(dir, optJar.getName());
         if (checkJarFile.exists()) {
             checkJarFile.delete();

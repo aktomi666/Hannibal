@@ -54,7 +54,7 @@ hannibal {
                                     super.visitCode();
                                     //methodVisitor.visitLdcInsn(desc);
                                     methodVisitor.visitVarInsn(25, 1);
-                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/sk/hannibal/MainActivity", "hookClickEvents", "(Landroid/view/View;)V", false);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/hannibal/scalpel/task/PickOutTask", "hookClickEvents", "(Landroid/view/View;)V", false);
                                 }
                             }
                             return adapter;

@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'com.sk.hannibal'
+group = 'com.hannibal.hannibal'
 version = '0.0.1'
 
 android {
@@ -35,15 +35,15 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 }
 
-//task makeJar(type: Copy){
-//    //delete('../app/libs/hannibal-debug.jar')
-//    from('build/intermediates/intermediate-jars/debug')
-//    into('../app/libs')
-//    include('classes.jar')
-//    rename('classes.jar','hannibal-debug.jar')
-//}
-//
-//makeJar.dependsOn(build)
+task makeJar(type: Copy){
+    //delete('../app/libs/hannibal-debug.jar')
+    from('build/intermediates/intermediate-jars/debug')
+    into('../app/libs')
+    include('classes.jar')
+    rename('classes.jar','hannibal-debug.jar')
+}
+
+makeJar.dependsOn(build)
 
 
 task generateSourcesJar(type: Jar) {
@@ -57,10 +57,10 @@ task generateJavadocs(type: Javadoc) {
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
 
-//task javadoc(type: Javadoc) {
-//    options.encoding = 'UTF-8'
-//    source = 'src/main/java'
-//}
+task javadoc(type: Javadoc) {
+    options.encoding = 'UTF-8'
+    source = 'src/main/java'
+}
 
 task generateJavadocsJar(type: Jar) {
     from generateJavadocs.destinationDir
@@ -85,7 +85,7 @@ bintray {
     key = 'f1cc8626b3d032eaf7828924f56e80e46dd78a27' //上述保存的API key
     pkg {
         repo = 'Hannibal' //必须设定一个值，这里选择maven
-        name = 'com.sk.scalpel' //必须，包名
+        name = 'com.hannibal.scalpel' //必须，包名
         version {
             name = '0.0.1' //版本名称
             desc = 'My test upload' //版本描述

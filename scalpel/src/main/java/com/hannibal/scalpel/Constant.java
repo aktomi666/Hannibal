@@ -1,4 +1,4 @@
-package com.sk.scalpel;
+package com.hannibal.scalpel;
 
 public class Constant {
 

@@ -1,12 +1,12 @@
-package com.sk.scalpel;
+package com.hannibal.scalpel;
 
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
-import com.sk.scalpel.Util.CommonUtils;
+import com.hannibal.scalpel.task.ExceptionsHandlingService;
 
-import static com.sk.scalpel.Constant.DevLogTag;
+import static com.hannibal.scalpel.Constant.DevLogTag;
 
 public class Hannibal {
 

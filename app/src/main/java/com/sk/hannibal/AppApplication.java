@@ -2,7 +2,7 @@ package com.sk.hannibal;
 
 import android.app.Application;
 
-import com.sk.scalpel.Hannibal;
+import com.hannibal.scalpel.Hannibal;
 
 public class AppApplication extends Application {
 

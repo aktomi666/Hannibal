@@ -6,7 +6,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
 
-import com.sk.scalpel.Hannibal;
 
 import java.io.IOException;
 
@@ -48,17 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (Exception e) {
             e.printStackTrace();
         }
-        init();
-    }
-
-    private void init() {
-        Log.e("hookXM", "init");
-    }
-
-
-    public static void hookClickEvents(View v) {
-        Log.e("hookXM",  v.getRootView() + " " + v);
-        //Log.e("hookXM", andThis.toString() + " b");
     }
 
     @Override

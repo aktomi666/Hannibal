@@ -1,13 +1,10 @@
-package com.sk.scalpel;
+package com.hannibal.scalpel.task;
 
 import android.content.Context;
-import android.os.Build;
-import android.text.TextUtils;
 import android.util.Log;
 
-import com.sk.scalpel.Util.CommonUtils;
-import com.sk.scalpel.Util.TelephonyUtils;
-import com.sk.scalpel.bean.CrashReportBean;
+import com.hannibal.scalpel.BuildConfig;
+import com.hannibal.scalpel.Constant;
 
 import org.apache.http.conn.ConnectTimeoutException;
 
@@ -15,7 +12,6 @@ import java.net.ConnectException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.Locale;
 
 public class ExceptionsHandlingService {
 
@@ -69,7 +65,7 @@ public class ExceptionsHandlingService {
      */
     private static void reportExceptionToServer(Context context, Throwable e) {
 
-        CrashReportTask crashReportTask = new CrashReportTask(context);
+        PickOutTask crashReportTask = new PickOutTask(context);
         crashReportTask.collectDataAndUpload(e);
     }
 

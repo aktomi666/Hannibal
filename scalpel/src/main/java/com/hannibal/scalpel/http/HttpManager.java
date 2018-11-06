@@ -1,8 +1,8 @@
-package com.sk.scalpel.http;
+package com.hannibal.scalpel.http;
 
 
-import com.sk.scalpel.BuildConfig;
-import com.sk.scalpel.Constant;
+import com.hannibal.scalpel.BuildConfig;
+import com.hannibal.scalpel.Constant;
 
 import java.util.concurrent.TimeUnit;
 

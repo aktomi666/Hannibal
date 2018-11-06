@@ -1,6 +1,6 @@
-package com.sk.scalpel.http;
+package com.hannibal.scalpel.http;
 
-import com.sk.scalpel.bean.CrashReportBean;
+import com.hannibal.scalpel.bean.CrashReportBean;
 
 import java.util.Observable;
 

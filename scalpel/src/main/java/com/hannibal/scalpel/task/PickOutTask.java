@@ -1,27 +1,27 @@
-package com.sk.scalpel;
+package com.hannibal.scalpel.task;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
-import com.sk.scalpel.Util.CommonUtils;
-import com.sk.scalpel.Util.TelephonyUtils;
-import com.sk.scalpel.bean.CrashReportBean;
-import com.sk.scalpel.http.HttpManager;
+import com.hannibal.scalpel.Util.CommonUtils;
+import com.hannibal.scalpel.Util.TelephonyUtils;
+import com.hannibal.scalpel.bean.CrashReportBean;
+import com.hannibal.scalpel.http.HttpManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.sk.scalpel.Constant.DevLogTag;
+import static com.hannibal.scalpel.Constant.DevLogTag;
 
-public class CrashReportTask {
+public class PickOutTask {
 
     private Context mContext;
 
-    public CrashReportTask(Context context) {
+    public PickOutTask(Context context) {
         this.mContext = context;
     }
 
@@ -122,7 +122,7 @@ public class CrashReportTask {
 
         StringBuilder stacktraceBuilder = new StringBuilder();
         StackTraceElement[] stacks = e.getStackTrace();
-        String parentPackageName = CrashReportTask.class.getPackage().getName();
+        String parentPackageName = PickOutTask.class.getPackage().getName();
         int lastDotIndex = parentPackageName.lastIndexOf(".");
         parentPackageName = parentPackageName.substring(0, lastDotIndex);
 
@@ -138,5 +138,11 @@ public class CrashReportTask {
         }
 
         return stacktraceBuilder.toString();
+    }
+
+
+    public static void hookClickEvents(View v) {
+        Log.e("hookXM",  v.getRootView() + " ss " + v);
+        //Log.e("hookXM", andThis.toString() + " b");
     }
 }

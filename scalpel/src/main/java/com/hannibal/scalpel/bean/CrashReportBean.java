@@ -1,4 +1,4 @@
-package com.sk.scalpel.bean;
+package com.hannibal.scalpel.bean;
 
 public class CrashReportBean {
 

@@ -13,7 +13,7 @@ import org.gradle.api.Project
 class HannibalPluginImpl implements Plugin<Project> {
     @Override
     void apply(Project project) {
-        println ":applied Hannibal"
+        println ":applied Hannibal success!"
         project.extensions.create('hannibal', HannibalParams)
         Util.setProject(project)
         try {

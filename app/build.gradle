@@ -44,21 +44,46 @@ hannibal {
 
     //this is the most important part
     modifyMatchMaps = [
-            '*MainActivity': [
-                    ['methodName': 'onClick', 'methodDesc': null, 'adapter': {
+            '*Activity|*Receiver|!android*': [
+                    ['methodName': 'on**', 'methodDesc': '(Landroid/os/Bundle;)V', 'adapter': {
                         ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
                             MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
                             MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
                                 @Override
                                 void visitCode() {
                                     super.visitCode();
-                                    //methodVisitor.visitLdcInsn(desc);
                                     methodVisitor.visitVarInsn(25, 1);
-                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/hannibal/scalpel/task/PickOutTask", "hookClickEvents", "(Landroid/view/View;)V", false);
+                                    //下面这行代码 为要调用的方法，请酌情修改
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                                        "com/hannibal/scalpel/task/PickOutTask",
+                                                        "hookOnEvents",
+                                                        "(Landroid/os/Bundle;)V",
+                                                        false);
                                 }
                             }
                             return adapter;
                     }]
             ]
+//            ,
+//            '*MainActivity': [
+//                    ['methodName': 'onClick', 'methodDesc': null, 'adapter': {
+//                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
+//                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
+//                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
+//                                @Override
+//                                void visitCode() {
+//                                    super.visitCode();
+//                                    //methodVisitor.visitLdcInsn(desc);
+//                                    methodVisitor.visitVarInsn(25, 1);
+//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+//                                                        "com/hannibal/scalpel/task/PickOutTask",
+//                                                        "hookClickEvents",
+//                                                        "(Landroid/view/View;)V",
+//                                                        false);
+//                                }
+//                            }
+//                            return adapter;
+//                    }]
+//            ]
     ]
 }

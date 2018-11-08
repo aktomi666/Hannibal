@@ -2,8 +2,10 @@ package com.hannibal.scalpel.task;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.hannibal.scalpel.Util.CommonUtils;
@@ -142,7 +144,12 @@ public class PickOutTask {
 
 
     public static void hookClickEvents(View v) {
-        Log.e("hookXM",  v.getRootView() + " ss " + v);
+        Log.e("hookXM",  "hookClickEvents " + v);
+        //Log.e("hookXM", andThis.toString() + " b");
+    }
+
+    public static void hookOnEvents(Bundle v) {
+        Log.e("hookXM",  "hookOnEvents " + v.toString());
         //Log.e("hookXM", andThis.toString() + " b");
     }
 }

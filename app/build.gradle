@@ -45,7 +45,7 @@ hannibal {
     //this is the most important part
     modifyMatchMaps = [
             '*Activity|*Receiver|!android*': [
-                    ['methodName': 'on**', 'methodDesc': '(Landroid/os/Bundle;)V', 'adapter': {
+                    ['methodName': 'on**', 'methodDesc': null, 'adapter': {
                         ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
                             MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
                             MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
@@ -57,7 +57,7 @@ hannibal {
                                     methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
                                                         "com/hannibal/scalpel/task/PickOutTask",
                                                         "hookOnEvents",
-                                                        "(Landroid/os/Bundle;)V",
+                                                        null,
                                                         false);
                                 }
                             }

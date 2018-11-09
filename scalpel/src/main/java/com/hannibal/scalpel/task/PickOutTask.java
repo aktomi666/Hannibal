@@ -149,7 +149,7 @@ public class PickOutTask {
     }
 
     public static void hookOnEvents(Bundle v) {
-        Log.e("hookXM",  "hookOnEvents " + v.toString());
+        Log.e("hookXM",  "hookOnEvents " + v);
         //Log.e("hookXM", andThis.toString() + " b");
     }
 }

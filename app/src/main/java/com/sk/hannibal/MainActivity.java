@@ -7,8 +7,12 @@ import android.util.Log;
 import android.view.View;
 
 
+import com.sk.hannibal.base.BaseActivity;
+
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -16,17 +20,19 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity {
 
+    @BindView(R.id.sdsdds)
     AppCompatTextView sss;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
 
-        sss = findViewById(R.id.sdsdds);
-        sss.setOnClickListener(this);
+    @Override
+    protected void initView() {
+        super.initView();
 
         try {
             new OkHttpClient.Builder()
@@ -49,14 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
+    @OnClick(R.id.sdsdds)
     public void onClick(View v) {
 
     }
+
 }
 

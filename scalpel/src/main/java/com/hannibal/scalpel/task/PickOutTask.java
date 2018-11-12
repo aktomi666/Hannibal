@@ -92,9 +92,6 @@ public class PickOutTask {
     }
 
 
-
-
-
     private String getVersion(String appVersionName) {
 
         String versionString = null;
@@ -148,8 +145,8 @@ public class PickOutTask {
         //Log.e("hookXM", andThis.toString() + " b");
     }
 
-    public static void hookOnEvents(Bundle v) {
-        Log.e("hookXM",  "hookOnEvents " + v);
+    public static void hookOnEvents(Object t, Object v, Object n) {
+        Log.e("hookXM", n + " " + v + " " + t);
         //Log.e("hookXM", andThis.toString() + " b");
     }
 }

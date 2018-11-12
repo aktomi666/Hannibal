@@ -21,6 +21,9 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation project(':scalpel')
 }
@@ -52,13 +55,21 @@ hannibal {
                                 @Override
                                 void visitCode() {
                                     super.visitCode();
+                                    methodVisitor.visitVarInsn(25, 0);
                                     methodVisitor.visitVarInsn(25, 1);
+                                    //methodVisitor.visitLdcInsn(desc);
+                                    methodVisitor.visitLdcInsn(name);
                                     //下面这行代码 为要调用的方法，请酌情修改
                                     methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
-                                                        "com/hannibal/scalpel/task/PickOutTask",
-                                                        "hookOnEvents",
-                                                        null,
-                                                        false);
+                                            "com/hannibal/scalpel/task/PickOutTask",
+                                            "hookOnEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
+//                                    methodVisitor.visitVarInsn(25, 1);
+//                                    //下面这行代码 为要调用的方法，请酌情修改
+//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+//                                                        "com/hannibal/scalpel/task/PickOutTask",
+//                                                        "hookOnEvents",
+//                                                        "(Landroid/os/Bundle;)V",
+//                                                        false);
                                 }
                             }
                             return adapter;

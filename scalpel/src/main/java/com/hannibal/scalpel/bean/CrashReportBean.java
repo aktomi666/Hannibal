@@ -3,6 +3,7 @@ package com.hannibal.scalpel.bean;
 public class CrashReportBean {
 
     public int ID;
+    public int type; // 0是exception 1是log
     public String message;
     public String exceptionType;
     public String stackTrace;

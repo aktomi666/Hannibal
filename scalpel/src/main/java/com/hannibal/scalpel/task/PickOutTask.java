@@ -23,6 +23,10 @@ public class PickOutTask {
 
     private Context mContext;
 
+    public PickOutTask() {
+
+    }
+
     public PickOutTask(Context context) {
         this.mContext = context;
     }
@@ -40,7 +44,7 @@ public class PickOutTask {
         report.stackTrace = stackTraceInString;
         report.exceptionType = e.getClass().getSimpleName();
 
-        String appVersionName = null;
+
 
         report.message = e.getMessage();
 
@@ -52,6 +56,7 @@ public class PickOutTask {
             report.model = Build.MODEL;
         }
 
+        String appVersionName = null;
         report.osVersion = getVersion(appVersionName);
         report.manufacturer = Build.MANUFACTURER;
         report.timestamp = CommonUtils.getCurrentTime(false);
@@ -69,7 +74,38 @@ public class PickOutTask {
         return report;
     }
 
-    private void upload(CrashReportBean crashReportBean) {
+    private CrashReportBean collectDataFromLog(String str) {
+
+        CrashReportBean report = new CrashReportBean();
+        report.type = 1;
+        report.message = str;
+
+        if (CommonUtils.isUsing2GNetworkConnection(mContext)) {
+            report.network = "2G";
+            report.model = String.format("%s; %s", Build.MODEL, report.network);
+        } else {
+            report.model = Build.MODEL;
+        }
+
+        String appVersionName = null;
+        report.osVersion = getVersion(appVersionName);
+        report.manufacturer = Build.MANUFACTURER;
+        report.timestamp = CommonUtils.getCurrentTime(false);
+        report.imsiNo = TelephonyUtils.getInstance(mContext).getImsi(0);
+
+
+        // waiting for redesign.
+		/*HttpResult<WebApiResponse> result = WebApi.executePostJson(WebApi.JLR_CrashReport, report, false, WebApiResponse.class);
+
+		if (AllianzRescueApplication.getInstance() != null && result.getResultType() != HttpResultType.Succeeded) {
+
+			CrashReportDaoExtensions.create(AllianzRescueApplication.getInstance(), report);
+		}*/
+
+        return report;
+    }
+
+    private synchronized void upload(CrashReportBean crashReportBean) {
 
         HttpManager.getHttpService().uploadCrashReport(crashReportBean)
         .enqueue(new Callback<CrashReportBean>() {
@@ -91,6 +127,10 @@ public class PickOutTask {
         upload(crashReportBean);
     }
 
+    public void collectDataAndUpload(String str) {
+        CrashReportBean crashReportBean = collectDataFromLog(str);
+        upload(crashReportBean);
+    }
 
     private String getVersion(String appVersionName) {
 
@@ -146,7 +186,17 @@ public class PickOutTask {
     }
 
     public static void hookOnEvents(Object t, Object v, Object n) {
+
+
+        String content = (null == t ? "" : t.toString())
+                        + "/" + (null == v ? "" : v.toString())
+                        + "/" + (null == n ? "" : n.toString());
+
+
+        PickOutTask pickOutTask = new PickOutTask();
+        pickOutTask.collectDataAndUpload(content);
         Log.e("hookXM", n + " " + v + " " + t);
         //Log.e("hookXM", andThis.toString() + " b");
     }
+
 }

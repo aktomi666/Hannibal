@@ -65,4 +65,13 @@ public class CommonUtils {
         return df;
     }
 
+    /**
+     * 字符串判空
+     * @param str
+     * @return
+     */
+    public static String checkNull(String str) {
+        return TextUtils.isEmpty(str) ? "" : str;
+    }
+
 }

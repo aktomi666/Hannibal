@@ -187,11 +187,9 @@ public class PickOutTask {
 
     public static void hookOnEvents(Object t, Object v, Object n) {
 
-
         String content = (null == t ? "" : t.toString())
                         + "/" + (null == v ? "" : v.toString())
                         + "/" + (null == n ? "" : n.toString());
-
 
         PickOutTask pickOutTask = new PickOutTask();
         pickOutTask.collectDataAndUpload(content);

@@ -194,6 +194,7 @@ public class PickOutTask {
         PickOutTask pickOutTask = new PickOutTask();
         pickOutTask.collectDataAndUpload(content);
         Log.e("hookXM", n + " " + v + " " + t);
+
         //Log.e("hookXM", andThis.toString() + " b");
     }
 

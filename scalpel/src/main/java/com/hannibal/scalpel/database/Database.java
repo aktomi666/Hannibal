@@ -10,14 +10,14 @@ public class Database extends SQLiteOpenHelper {
 
 	public static final String DB_NAME = "Hannibal.db";
 	
-	public static final int DB_VERSION = 25;
+	public static final int DB_VERSION = 1;
 	
 	public Database(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
 	}
 	
 	/** Table names */
-	public static final String DBTABLE_RescueTask = "claim_InformantInfo"; 
+	public static final String DBTABLE_DiseasedTissueTask = "DiseasedTissueInfo";
 	
 	public static final String DBTABLE_RescueTaskPhotos = "photos";
 	
@@ -142,30 +142,6 @@ public class Database extends SQLiteOpenHelper {
 		// shit. 
 		onCreate(db);
 		addColumn(db, DBTABLE_RescueTask, "BenefitId", "TEXT", true);
-		addColumn(db, DBTABLE_RescueTask, "LoadOnTrailerTime", "TEXT", true);
-		addColumn(db, DBTABLE_RescueTask, "JobNumber", "TEXT", true);
-		addColumn(db, DBTABLE_RescueTask, "UserPhoneNumber", "TEXT", true);
-		addColumn(db, DBTABLE_RescueTask, "Longitude", "FLOAT", true);
-		addColumn(db, DBTABLE_RescueTask, "Latitude", "FLOAT", true);
-		addColumn(db, DBTABLE_RescueTask, "Position", "TEXT", true);
-		addColumn(db, DBTABLE_RescueTask, "RepaireShop", "TEXT", true);
-		addColumn(db, DBTABLE_RescueTask, "Address", "TEXT", true);
-		addColumn(db, DBTABLE_RescueTask, "DestAddress", "TEXT", true);
-		addColumn(db, DBTABLE_RescueTask, "CaseNumber", "TEXT", true);
-		
-		addColumn(db, DBTABLE_UploadFailedTasks, "RetryCount", "INTEGER", true);
-		addColumn(db, DBTABLE_UploadFailedTasks, "FirstUploadTime", "TEXT", true);
-		addColumn(db, DBTABLE_UploadFailedTasks, "ArchiveDirPath", "TEXT", true);
-		
-		addColumn(db, DBTABLE_UploadingTask, "RescueTaskId", "INTEGER UNIQUE", true);
-		addColumn(db, DBTABLE_UploadingTask, "StartTime", "INTEGER", true);
-		addColumn(db, DBTABLE_UploadingTask, "IsFinished", "INTEGER DEFAULT(0)", true);
-		addColumn(db, DBTABLE_UploadingTask, "EndTime", "INTEGER DEFAULT(0)", true);
-		
-		addColumn(db, DBTABLE_RescueTaskPhotos, "RescueTaskId", "INTEGER DEFAULT(0)", false);
-		addColumn(db, DBTABLE_RescueTaskPhotos, "IsUploadFailed", "INTEGER DEFAULT(0)", true);
-		
-		addColumn(db, DBTABLE_TaskLocationHistory, "RescueTaskStepId", "INTEGER", true);
 	}
 	
 	private void addColumn(SQLiteDatabase database,

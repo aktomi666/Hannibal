@@ -1,6 +1,5 @@
 package com.hannibal.scalpel.task;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.hannibal.scalpel.BuildConfig;
@@ -23,7 +22,7 @@ public class ExceptionsHandlingService {
      *
      */
 
-    public static void handleException(Context context, Throwable exception) {
+    public static void handleException(Throwable exception) {
         if (exception == null || shouldExceptionBeIgnored(exception)) {
             return;
         }
@@ -31,7 +30,7 @@ public class ExceptionsHandlingService {
         if (BuildConfig.DEBUG) {
             Log.e(Constant.DevLogTag, exception.getMessage(), exception);
         } else {
-            reportExceptionToServer(context, exception);
+            reportExceptionToDatabase(exception);
         }
     }
 
@@ -60,12 +59,11 @@ public class ExceptionsHandlingService {
 
     /**
      * Invoke the async task to submit the exception infomation to backend server.
-     * @param context
      * @param e
      */
-    private static void reportExceptionToServer(Context context, Throwable e) {
+    private static void reportExceptionToDatabase(Throwable e) {
 
-        PickOutTask crashReportTask = new PickOutTask(context);
+        PickOutTask crashReportTask = new PickOutTask();
         crashReportTask.collectDataAndUpload(e);
     }
 

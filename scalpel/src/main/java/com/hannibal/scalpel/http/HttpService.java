@@ -1,12 +1,9 @@
 package com.hannibal.scalpel.http;
 
-import com.hannibal.scalpel.bean.CrashReportBean;
-
-import java.util.Observable;
+import com.hannibal.scalpel.bean.DiseasedTissueBean;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
@@ -19,5 +16,5 @@ public interface HttpService {
      */
     @FormUrlEncoded
     @POST("users/uploadCrashReport")
-    Call<CrashReportBean> uploadCrashReport(@Body CrashReportBean crashReportBean);
+    Call<DiseasedTissueBean> uploadCrashReport(@Body DiseasedTissueBean crashReportBean);
 }

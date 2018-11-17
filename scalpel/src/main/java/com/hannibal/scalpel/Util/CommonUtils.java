@@ -5,6 +5,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.hannibal.scalpel.BuildConfig;
+import com.hannibal.scalpel.Constant;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +18,19 @@ import java.util.TimeZone;
 public class CommonUtils {
 
 
+    /**
+     * 打印开发日志
+     * @param format
+     * @param objects
+     */
+    public static void printDevLog(String format, Object... objects) {
+        if (BuildConfig.DEBUG && !TextUtils.isEmpty(format)) {
+            if (objects != null && objects.length > 0)
+                Log.e(Constant.DevLogTag, String.format(format, objects));
+            else
+                Log.e(Constant.DevLogTag, format);
+        }
+    }
 
     /**
      * Check if the user is using the 2G mobile network connection.

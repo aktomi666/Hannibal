@@ -1,8 +1,8 @@
 package com.hannibal.scalpel.bean;
 
-public class CrashReportBean {
+public class DiseasedTissueBean {
 
-    public int ID;
+    public int id;
     public int type; // 0是exception 1是log
     public String message;
     public String exceptionType;

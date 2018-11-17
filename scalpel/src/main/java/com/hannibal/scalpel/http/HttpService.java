@@ -11,10 +11,10 @@ public interface HttpService {
 
     /**
      * uoload crash log
-     * @param crashReportBean
+     * @param diseasedTissueBean
      * @return
      */
     @FormUrlEncoded
-    @POST("users/uploadCrashReport")
-    Call<DiseasedTissueBean> uploadCrashReport(@Body DiseasedTissueBean crashReportBean);
+    @POST("users/uploadDiseasedTissue")
+    Call<DiseasedTissueBean> uploadDiseasedTissue(@Body DiseasedTissueBean diseasedTissueBean);
 }

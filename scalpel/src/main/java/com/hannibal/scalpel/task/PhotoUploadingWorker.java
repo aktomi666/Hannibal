@@ -49,7 +49,6 @@ public class PhotoUploadingWorker extends TaskUploadWorkerBase {
 		}
 
 		if (data == null || data.getResponse() == null) {
-			
 			return false;
 			
 		} else if (data.getResponse().ReturnCode == 0 || isReturnMessageIndicatingDuplicatedUpload(data.getResponse().Message)) {

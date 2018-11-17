@@ -67,8 +67,6 @@ public class DiseasedTissueDao extends DataAccessObject {
 
 	public DiseasedTissueBean getDiseasedTissue(int offset) {
 
-		DiseasedTissueBean crashReport = null;
-
 		String query = String.format(Locale.CHINA,
 				"SELECT * FROM %s ORDER BY Timestamp ASC LIMIT 1 OFFSET %d;",
 				Database.DBTABLE_ExceptionLog,
@@ -77,9 +75,8 @@ public class DiseasedTissueDao extends DataAccessObject {
 		Cursor cursor = null;
 		try {
 			cursor = getReadableDatabase().rawQuery(query, null);
-
 			if (cursor != null && !cursor.isClosed() && cursor.moveToNext()) {
-				crashReport = readDiseasedTissue(cursor);
+				return readDiseasedTissue(cursor);
 			}
 		} catch (Exception except) {
 			ExceptionsHandlingService.handleException(except);
@@ -88,7 +85,6 @@ public class DiseasedTissueDao extends DataAccessObject {
 				cursor.close();
 			}
 		}
-
-		return crashReport;
+		return null;
 	}
 }

@@ -33,14 +33,14 @@ public class BiopsyService extends IntentService {
     @Override protected void onHandleIntent(Intent intent) {
 
         int counter = 1;
-        DiseasedTissueBean rescueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(this, 0);
+        DiseasedTissueBean diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(this, 0);
 
-        while (rescueTask != null) {
+        while (diseasedTissueTask != null) {
             TaskUploadWorkerBase uploadWorker = new PhotoUploadingWorker();
             uploadWorker.setContext(getApplicationContext());
-            uploadWorker.doUpload(rescueTask);
+            uploadWorker.doUpload(diseasedTissueTask);
 
-            rescueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(this, counter ++);
+            diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(this, counter ++);
         }
     }
 

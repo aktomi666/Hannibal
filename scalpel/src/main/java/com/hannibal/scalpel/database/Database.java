@@ -41,7 +41,7 @@ public class Database extends SQLiteOpenHelper {
 		 * add Address, DestAddress, CaseNumber, RepaireShop
 		 */
 		db.execSQL("CREATE TABLE IF NOT EXISTS " 
-					+ DBTABLE_RescueTask
+					+ DBTABLE_DiseasedTissueTask
 					+ " (ID INTEGER PRIMARY KEY AUTOINCREMENT," 
 					+ "ClaimID,"
 					+ "CaseNumber,"
@@ -141,7 +141,7 @@ public class Database extends SQLiteOpenHelper {
 	@Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// shit. 
 		onCreate(db);
-		addColumn(db, DBTABLE_RescueTask, "BenefitId", "TEXT", true);
+		addColumn(db, DBTABLE_DiseasedTissueTask, "BenefitId", "TEXT", true);
 	}
 	
 	private void addColumn(SQLiteDatabase database,

@@ -48,7 +48,7 @@ hannibal {
     //this is the most important part
     modifyMatchMaps = [
             '*Activity|*Receiver|!android*': [
-                    ['methodName': 'on**', 'methodDesc': null, 'adapter': {
+                    ['methodName': 'on**', 'methodDesc': '(Landroid/view/View;)V', 'adapter': {
                         ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
                             MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
                             MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {

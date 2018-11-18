@@ -19,7 +19,7 @@ public class Database extends SQLiteOpenHelper {
 	/** Table names */
 	public static final String DBTABLE_DiseasedTissueTask = "DiseasedTissueInfo";
 	
-	public static final String DBTABLE_RescueTaskPhotos = "photos";
+	public static final String DBTABLE_TissueSampleTask = "TissueSampleInfo";
 	
 	public static final String DBTABLE_Settings = "AR_Settings"; 
 	
@@ -91,10 +91,10 @@ public class Database extends SQLiteOpenHelper {
 		
 		// Cursed shitty legacy table table defintion.
 		db.execSQL("CREATE TABLE IF NOT EXISTS " 
-					+ DBTABLE_RescueTaskPhotos
+					+ DBTABLE_TissueSampleTask
 					+ " (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "RescueTaskId INTEGER, "
-					+ "ImageID TEXT,"
+					+ "SamplePath TEXT,"
 					+ "ClaimID TEXT," 
 					+ "CaseKey TEXT," 
 					+ "PhotoType," 
@@ -153,8 +153,8 @@ public class Database extends SQLiteOpenHelper {
 		String query = String.format("SELECT * FROM %s WHERE 1=0;", tableName);
 		Cursor cursor = null;
 		String[] columns = null;
+
 		try {
-			
 			cursor = database.rawQuery(query, null);
 			if (cursor != null) {
 				columns = cursor.getColumnNames();
@@ -171,7 +171,6 @@ public class Database extends SQLiteOpenHelper {
 		
 		boolean isColumnExists = false;
 		for (String colName: columns) {
-			
 			if (columnName.equalsIgnoreCase(colName)) {
 				isColumnExists = true;
 				break;

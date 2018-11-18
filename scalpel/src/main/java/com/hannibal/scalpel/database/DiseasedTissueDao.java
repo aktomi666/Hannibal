@@ -18,7 +18,7 @@ public class DiseasedTissueDao extends DataAccessObject {
 
 		DiseasedTissueBean crashReport = new DiseasedTissueBean();
 
-		crashReport.setID(cursor.getInt(cursor.getColumnIndex("ID")));
+		crashReport.setId(cursor.getInt(cursor.getColumnIndex("ID")));
 		crashReport.setTaskId(cursor.getString(cursor.getColumnIndex("TaskId")));
 		crashReport.setExceptionType(cursor.getString(cursor.getColumnIndex("ExceptionType")));
 		crashReport.setMessage(cursor.getString(cursor.getColumnIndex("Message")));
@@ -50,17 +50,17 @@ public class DiseasedTissueDao extends DataAccessObject {
 		values.put("Model", report.getModel());
 		values.put("Network", report.getNetwork());
 
-		if (StringExtensions.isNotNullAndEmpty(report.getRemark())) {
+		if (!TextUtils.isEmpty(report.getRemark())) {
 			values.put("Remark", report.getRemark());
 		}
 		values.put("Timestamp", report.getTimestamp());
 
-		return getWritableDatabase().insert(Database.DBTABLE_ExceptionLog, null, values);
+		return getWritableDatabase().insert(Database.DBTABLE_DiseasedTissueTask, null, values);
 	}
 
 	public long delete(int id) {
 
-		return getWritableDatabase().delete(Database.DBTABLE_ExceptionLog,
+		return getWritableDatabase().delete(Database.DBTABLE_DiseasedTissueTask,
 				"ID=?",
 				new String[] { String.valueOf(id) });
 	}
@@ -69,7 +69,7 @@ public class DiseasedTissueDao extends DataAccessObject {
 
 		String query = String.format(Locale.CHINA,
 				"SELECT * FROM %s ORDER BY Timestamp ASC LIMIT 1 OFFSET %d;",
-				Database.DBTABLE_ExceptionLog,
+				Database.DBTABLE_DiseasedTissueTask,
 				offset);
 
 		Cursor cursor = null;

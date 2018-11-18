@@ -4,7 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 
+import com.hannibal.scalpel.Hannibal;
 import com.hannibal.scalpel.Util.CommonUtils;
+import com.hannibal.scalpel.service.BiopsyService;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -32,7 +34,7 @@ public class DataAccessObject {
 	 */
 	public void clearDatabase() {
 		SQLiteDatabase sqliteDb = getWritableDatabase();
-		sqliteDb.delete(Database.DBTABLE_RescueTaskPhotos, null, null);
+		sqliteDb.delete(Database.DBTABLE_TissueSampleTask, null, null);
 		sqliteDb.delete(Database.DBTABLE_DiseasedTissueTask, null, null);
 		sqliteDb.delete(Database.DBTABLE_TempTakenPhoto, null, null);
 		sqliteDb.delete(Database.DBTABLE_UploadFailedTasks, null, null);
@@ -59,5 +61,8 @@ public class DataAccessObject {
 				database = null;
 			}
 		}
+
+		// 插入完成，关闭数据库的时候启动服务，做上传操作
+		CommonUtils.openService(Hannibal.getInstance(), BiopsyService.class);
 	}
 }

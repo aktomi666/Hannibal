@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 
+import com.hannibal.scalpel.Util.CommonUtils;
+import com.hannibal.scalpel.service.BiopsyService;
 import com.hannibal.scalpel.task.ExceptionsHandlingService;
 
 import static com.hannibal.scalpel.Constant.DevLogTag;
@@ -12,9 +14,7 @@ import static com.hannibal.scalpel.Constant.DevLogTag;
 public class Hannibal extends Application {
 
     private static Context mContext;
-
     private static Hannibal crashHandler = new Hannibal();
-
     public static Hannibal getInstance() {
         return crashHandler;
     }
@@ -28,6 +28,8 @@ public class Hannibal extends Application {
                 ExceptionsHandlingService.handleException(e);
             }
         });
+
+        CommonUtils.openService(context, BiopsyService.class);
 
         Log.i(DevLogTag, "init crash success");
     }

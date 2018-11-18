@@ -64,7 +64,7 @@ public class ExceptionsHandlingService {
     private static void reportExceptionToDatabase(Throwable e) {
 
         PickOutTask crashReportTask = new PickOutTask();
-        crashReportTask.collectDataAndUpload(e);
+        crashReportTask.collectData(e);
     }
 
 }

@@ -1,6 +1,8 @@
 package com.hannibal.scalpel.Util;
 
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
@@ -11,6 +13,7 @@ import com.hannibal.scalpel.BuildConfig;
 import com.hannibal.scalpel.Constant;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -89,6 +92,37 @@ public class CommonUtils {
      */
     public static String checkNull(String str) {
         return TextUtils.isEmpty(str) ? "" : str;
+    }
+
+
+    /**
+     * 判断服务是否正在运行
+     * @param service
+     * @param context
+     * @return
+     */
+    public static boolean isServiceRunning(String service, Context context) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList<ActivityManager.RunningServiceInfo>) manager.getRunningServices(300);
+        for (int i = 0; i < runningService.size(); i++) {
+            if (runningService.get(i).service.getClassName().equals(service)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 开启服务
+     * @param context
+     * @param tClass
+     */
+    public static void openService(Context context, Class<?> tClass) {
+        String service = tClass.toString();
+        if (!isServiceRunning(service, context)) {
+            Intent intent = new Intent(context, tClass);
+            context.startService(intent);
+        }
     }
 
 }

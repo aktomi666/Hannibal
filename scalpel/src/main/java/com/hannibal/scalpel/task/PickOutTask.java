@@ -6,18 +6,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.hannibal.scalpel.Hannibal;
 import com.hannibal.scalpel.Util.CommonUtils;
-import com.hannibal.scalpel.Util.TelephonyUtils;
 import com.hannibal.scalpel.bean.DiseasedTissueBean;
-import com.hannibal.scalpel.database.DiseasedTissueDao;
-import com.hannibal.scalpel.http.HttpManager;
+import com.hannibal.scalpel.bean.TissueSampleBean;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.hannibal.scalpel.Constant.DevLogTag;
+import java.util.Locale;
 
 public class PickOutTask {
 
@@ -45,12 +38,12 @@ public class PickOutTask {
             stackTraceInString = getStackTraceAsString(e.getCause());
         }
 
-        report.stackTrace = stackTraceInString;
-        report.exceptionType = e.getClass().getSimpleName();
+        report.setStackTrace(stackTraceInString);
+        report.setExceptionType(e.getClass().getSimpleName());
 
 
 
-        report.message = e.getMessage();
+        report.setMessage(e.getMessage());
 
 
 //        if (CommonUtils.isUsing2GNetworkConnection(mContext)) {
@@ -61,9 +54,9 @@ public class PickOutTask {
 //        }
 
         String appVersionName = null;
-        report.osVersion = getVersion(appVersionName);
-        report.manufacturer = Build.MANUFACTURER;
-        report.timestamp = CommonUtils.getCurrentTime(false);
+        report.setOsVersion(getVersion(appVersionName));
+        report.setManufacturer(Build.MANUFACTURER);
+        report.setTimestamp(CommonUtils.getCurrentTime(false));
         //report.imsiNo = TelephonyUtils.getInstance(mContext).getImsi(0);
 
 
@@ -78,11 +71,11 @@ public class PickOutTask {
         return report;
     }
 
-    private DiseasedTissueBean collectDataFromLog(String str) {
+    private TissueSampleBean collectDataFromLog(String str) {
 
-        DiseasedTissueBean report = new DiseasedTissueBean();
-        report.type = 1;
-        report.message = str;
+        TissueSampleBean report = new TissueSampleBean();
+        report.setType(1);
+        report.setSamplePath(str);
 
 //        if (CommonUtils.isUsing2GNetworkConnection(mContext)) {
 //            report.network = "2G";
@@ -92,9 +85,9 @@ public class PickOutTask {
 //        }
 
         String appVersionName = null;
-        report.osVersion = getVersion(appVersionName);
-        report.manufacturer = Build.MANUFACTURER;
-        report.timestamp = CommonUtils.getCurrentTime(false);
+        report.setOsVersion(getVersion(appVersionName));
+        report.setManufacturer(Build.MANUFACTURER);
+        report.setTimestamp(CommonUtils.getCurrentTime(false));
         //report.imsiNo = TelephonyUtils.getInstance(mContext).getImsi(0);
 
 
@@ -109,31 +102,14 @@ public class PickOutTask {
         return report;
     }
 
-//    private synchronized void upload(DiseasedTissueBean crashReportBean) {
-//
-//        HttpManager.getHttpService().uploadCrashReport(crashReportBean)
-//        .enqueue(new Callback<DiseasedTissueBean>() {
-//
-//            @Override
-//            public void onResponse(Call<DiseasedTissueBean> call, Response<DiseasedTissueBean> response) {
-//                Log.e(DevLogTag, "发送成功");
-//            }
-//
-//            @Override
-//            public void onFailure(Call<DiseasedTissueBean> call, Throwable t) {
-//                Log.e(DevLogTag, "发送失败");
-//            }
-//        });
-//    }
-
-    public void collectDataAndUpload(Throwable e) {
-        DiseasedTissueBean crashReportBean = collectDataFromException(e);
-        DiseasedTissueBeanExtensions.create(context, crashReportBean);
+    public void collectData(Throwable e) {
+        DiseasedTissueBean diseasedTissueBean = collectDataFromException(e);
+        DiseasedTissueBeanExtensions.create(context, diseasedTissueBean);
     }
 
-    public void collectDataAndUpload(String str) {
-        DiseasedTissueBean crashReportBean = collectDataFromLog(str);
-        DiseasedTissueBeanExtensions.create(context, crashReportBean);
+    public void collectData(String str) {
+        TissueSampleBean tissueSampleBean = collectDataFromLog(str);
+        TissueSampleBeanExtensions.create(context, tissueSampleBean);
     }
 
     private String getVersion(String appVersionName) {
@@ -173,7 +149,7 @@ public class PickOutTask {
 
             if (s.getClassName().startsWith(parentPackageName)) {
 
-                stacktraceBuilder.append(String.format("%s::%s %d \r\n",
+                stacktraceBuilder.append(String.format(Locale.CHINA,"%s::%s %d \r\n",
                         getSimpleClassName(s.getClassName()),
                         s.getMethodName(),
                         s.getLineNumber()));
@@ -184,11 +160,12 @@ public class PickOutTask {
     }
 
 
-    public static void hookClickEvents(View v) {
-        Log.e("hookXM",  "hookClickEvents " + v);
-        //Log.e("hookXM", andThis.toString() + " b");
-    }
-
+    /**
+     * 接收埋点数据
+     * @param t
+     * @param v
+     * @param n
+     */
     public static void hookOnEvents(Object t, Object v, Object n) {
 
         String content = (null == t ? "" : t.toString())
@@ -196,10 +173,8 @@ public class PickOutTask {
                         + "/" + (null == n ? "" : n.toString());
 
         PickOutTask pickOutTask = new PickOutTask();
-        pickOutTask.collectDataAndUpload(content);
+        pickOutTask.collectData(content);
         Log.e("hookXM", n + " " + v + " " + t);
-
-        //Log.e("hookXM", andThis.toString() + " b");
     }
 
 }

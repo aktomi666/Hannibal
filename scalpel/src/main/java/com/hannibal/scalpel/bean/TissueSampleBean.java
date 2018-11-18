@@ -1,10 +1,10 @@
 package com.hannibal.scalpel.bean;
 
-public class DiseasedTissueBean {
+public class TissueSampleBean {
 
     public int id;
     public int type; // 0是exception 1是log
-    public String message;
+    public String SamplePath;   //组织样本路径
     public String exceptionType;
     public String stackTrace;
     public String imsiNo;
@@ -33,12 +33,12 @@ public class DiseasedTissueBean {
         this.type = type;
     }
 
-    public String getMessage() {
-        return message;
+    public String getSamplePath() {
+        return SamplePath;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setSamplePath(String samplePath) {
+        SamplePath = samplePath;
     }
 
     public String getExceptionType() {

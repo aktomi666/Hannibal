@@ -1,9 +1,13 @@
 package com.hannibal.scalpel.service;
 
 import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.hannibal.scalpel.Util.CommonUtils;
 import com.hannibal.scalpel.bean.DiseasedTissueBean;
 import com.hannibal.scalpel.bean.TissueSampleBean;
 import com.hannibal.scalpel.http.HttpManager;
@@ -31,22 +35,21 @@ import static com.hannibal.scalpel.Constant.DevLogTag;
  * Created by sk ON 2018/11/17.
  * Email: magicbaby810@gmail.com
  */
-public class BiopsyService extends IntentService {
+public class BiopsyService extends Service {
 
 
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
-    public BiopsyService(String name) {
-        super(name);
+
+    public BiopsyService() {
     }
 
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-
+    public int onStartCommand(Intent intent, int flags, int startId) {
         // ---------------- 埋点数据的上传  ----------------
         int counter = 1;
         TissueSampleBean tissueSampleBean = TissueSampleBeanExtensions.getTissueSample(this, 0);
@@ -64,7 +67,29 @@ public class BiopsyService extends IntentService {
             upload(diseasedTissueTask);
             diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(this, counter ++);
         }
+        return Service.START_STICKY;
     }
+
+//    @Override
+//    protected void onHandleIntent(Intent intent) {
+//        // ---------------- 埋点数据的上传  ----------------
+//        int counter = 1;
+//        TissueSampleBean tissueSampleBean = TissueSampleBeanExtensions.getTissueSample(this, 0);
+//
+//        while (tissueSampleBean != null) {
+//            upload(tissueSampleBean);
+//            tissueSampleBean = TissueSampleBeanExtensions.getTissueSample(this, counter ++);
+//        }
+//
+//        // ---------------- exception数据的上传  ----------------
+//        counter = 1;
+//        DiseasedTissueBean diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(this, 0);
+//
+//        while (diseasedTissueTask != null) {
+//            upload(diseasedTissueTask);
+//            diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(this, counter ++);
+//        }
+//    }
 
     private void upload(final TissueSampleBean tissueSampleBean) {
         HttpManager.getHttpService().uploadTissueSample(tissueSampleBean)
@@ -80,12 +105,12 @@ public class BiopsyService extends IntentService {
                     @Override
                     public void onNext(Response<TissueSampleBean> diseasedTissueBeanResponse) {
                         TissueSampleBeanExtensions.delete(BiopsyService.this, tissueSampleBean.id);
-                        Log.e(DevLogTag, "发送成功");
+                        CommonUtils.printDevLog("发送成功");
                     }
 
                     @Override
                     public void onError(Throwable t) {
-                        Log.e(DevLogTag, "发送失败");
+                        CommonUtils.printDevLog("发送失败");
                     }
 
                     @Override

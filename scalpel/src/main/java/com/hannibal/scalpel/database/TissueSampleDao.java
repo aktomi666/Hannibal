@@ -37,20 +37,13 @@ public class TissueSampleDao extends DataAccessObject {
 
 		ContentValues values = new ContentValues();
 
-		values.put("TaskId", report.getTaskId());
-		values.put("ExceptionType", report.getExceptionType());
 		values.put("SamplePath", report.getSamplePath());
-		values.put("StackTrace", report.getStackTrace());
-		values.put("IMSI", report.getImsiNo());
+		values.put("IMEI", report.getImsiNo());
 		values.put("OsVersion", report.getOsVersion());
 		values.put("APPVersion", report.getAppVersion());
 		values.put("Manufacturer", report.getManufacturer());
 		values.put("Model", report.getModel());
 		values.put("Network", report.getNetwork());
-
-		if (!TextUtils.isEmpty(report.getRemark())) {
-			values.put("Remark", report.getRemark());
-		}
 		values.put("Timestamp", report.getTimestamp());
 
 		return getWritableDatabase().insert(Database.DBTABLE_TissueSampleTask, null, values);

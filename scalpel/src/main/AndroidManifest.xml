@@ -4,11 +4,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
-    <application android:name=".Hannibal" >
+    <application android:name="com.hannibal.scalpel.Hannibal" >
 
 
 
-        <service android:name=".service.BiopsyService"/>
+        <service android:name="com.hannibal.scalpel.service.BiopsyService"/>
+
     </application>
 
 </manifest>

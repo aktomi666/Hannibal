@@ -61,8 +61,5 @@ public class DataAccessObject {
 				database = null;
 			}
 		}
-
-		// 插入完成，关闭数据库的时候启动服务，做上传操作
-		CommonUtils.openService(Hannibal.getInstance(), BiopsyService.class);
 	}
 }

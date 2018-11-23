@@ -2,8 +2,13 @@ package com.hannibal.scalpel;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkRequest;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.hannibal.scalpel.Util.CommonUtils;
 import com.hannibal.scalpel.service.BiopsyService;
@@ -14,12 +19,17 @@ import static com.hannibal.scalpel.Constant.DevLogTag;
 public class Hannibal extends Application {
 
     private static Context mContext;
-    private static Hannibal crashHandler = new Hannibal();
-    public static Hannibal getInstance() {
-        return crashHandler;
+    private static Hannibal handler = new Hannibal();
+
+    public static Application getInstance() {
+        return handler;
     }
 
-    public static void init(final Application context) {
+    public static Context getContext() {
+        return mContext;
+    }
+
+    public static void init(final Context context) {
         mContext = context;
 
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
@@ -28,10 +38,13 @@ public class Hannibal extends Application {
                 ExceptionsHandlingService.handleException(e);
             }
         });
+        CommonUtils.printDevLog("init hannibal success");
 
-        CommonUtils.openService(context, BiopsyService.class);
+        //CommonUtils.openService(getInstance().getApplicationContext(), BiopsyService.class);
 
-        Log.i(DevLogTag, "init crash success");
+        Intent intent = new Intent();
+        intent.setClassName("com.hannibal.scalpel", "com.hannibal.scalpel.service.BiopsyService");
+        mContext.startService(intent);
     }
 
     public static void testCrash() {
@@ -40,7 +53,7 @@ public class Hannibal extends Application {
             ss = ss.trim();
         } catch (Exception e) {
             ExceptionsHandlingService.handleException(e);
-            Log.i(DevLogTag, "test crash success");
+            CommonUtils.printDevLog( "test crash success!");
         }
     }
 

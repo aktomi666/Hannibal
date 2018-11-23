@@ -1,14 +1,20 @@
 package com.hannibal.scalpel.task;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.hannibal.scalpel.Hannibal;
 import com.hannibal.scalpel.Util.CommonUtils;
 import com.hannibal.scalpel.bean.DiseasedTissueBean;
 import com.hannibal.scalpel.bean.TissueSampleBean;
+import com.hannibal.scalpel.service.BiopsyService;
 
 import java.util.Locale;
 
@@ -17,7 +23,6 @@ public class PickOutTask {
     private Context context;
 
     public PickOutTask() {
-
     }
 
     public PickOutTask(Context context) {
@@ -109,7 +114,7 @@ public class PickOutTask {
 
     public void collectData(String str) {
         TissueSampleBean tissueSampleBean = collectDataFromLog(str);
-        TissueSampleBeanExtensions.create(context, tissueSampleBean);
+        TissueSampleBeanExtensions.create(Hannibal.getInstance(), tissueSampleBean);
     }
 
     private String getVersion(String appVersionName) {

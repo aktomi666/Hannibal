@@ -12,6 +12,7 @@ import android.util.Log;
 import com.hannibal.scalpel.BuildConfig;
 import com.hannibal.scalpel.Constant;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,6 +60,23 @@ public class CommonUtils {
                     return true;
                 }
             }
+        }
+        return false;
+    }
+
+    /**
+     * 检测网络连通性（是否能访问网络）
+     * @return
+     */
+    public static boolean isNetworkOnline() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("ping -c 1 223.5.5.5");
+            int exitValue = ipProcess.waitFor();
+            printDevLog("isNetworkOnline exitValue " + exitValue);
+            return (exitValue == 0);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
         return false;
     }

@@ -1,14 +1,9 @@
 package com.hannibal.scalpel.task;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 
 import com.hannibal.scalpel.Hannibal;
 import com.hannibal.scalpel.Util.CommonUtils;
@@ -179,6 +174,9 @@ public class PickOutTask {
 
         PickOutTask pickOutTask = new PickOutTask();
         pickOutTask.collectData(content);
+
+        BiopsyService biopsyService = new BiopsyService();
+        biopsyService.startPolling();
         Log.e("hookXM", n + " " + v + " " + t);
     }
 

@@ -1,32 +1,19 @@
 package com.hannibal.scalpel.service;
 
-import android.app.IntentService;
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.util.Log;
+import android.content.Context;
 
+import com.hannibal.scalpel.Hannibal;
 import com.hannibal.scalpel.Util.CommonUtils;
+import com.hannibal.scalpel.asynctask.DiseasedTissueTask;
+import com.hannibal.scalpel.asynctask.TissueSampleTask;
 import com.hannibal.scalpel.bean.DiseasedTissueBean;
 import com.hannibal.scalpel.bean.TissueSampleBean;
-import com.hannibal.scalpel.http.HttpManager;
 import com.hannibal.scalpel.task.DiseasedTissueBeanExtensions;
 import com.hannibal.scalpel.task.TissueSampleBeanExtensions;
-import com.trello.rxlifecycle2.RxLifecycle;
-import com.trello.rxlifecycle2.android.ActivityEvent;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.hannibal.scalpel.Constant.DevLogTag;
 
 /**
  *
@@ -35,120 +22,69 @@ import static com.hannibal.scalpel.Constant.DevLogTag;
  * Created by sk ON 2018/11/17.
  * Email: magicbaby810@gmail.com
  */
-public class BiopsyService extends Service {
+public class BiopsyService {
 
+    private static final long PollingSleepIntervalInMilliSeconds = (long) 30 * 1000;
 
+    private Context context;
+    private Timer timer;
+    private int count = 0;
+    private boolean isRequesting = false;
 
     public BiopsyService() {
+
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    // 启动轮询
+    public void startPolling() {
+        if (null == timer) doWork();
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    // 停止派单轮询
+    public void stopPolling() {
+        if (null != timer) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+    private void doWork() {
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override public void run() {
+
+                if (CommonUtils.isNetworkOnline() && !isRequesting)
+                    upload();
+            }
+
+        }, 0, PollingSleepIntervalInMilliSeconds);
+    }
+
+
+    private void upload() {
+        isRequesting = true;
+
         // ---------------- 埋点数据的上传  ----------------
-        int counter = 1;
-        TissueSampleBean tissueSampleBean = TissueSampleBeanExtensions.getTissueSample(this, 0);
+        int counter = 0;
+        TissueSampleBean tissueSampleBean = TissueSampleBeanExtensions.getTissueSample(Hannibal.getInstance(), 0);
 
         while (tissueSampleBean != null) {
-            upload(tissueSampleBean);
-            tissueSampleBean = TissueSampleBeanExtensions.getTissueSample(this, counter ++);
+            new TissueSampleTask().execute(tissueSampleBean);
+            tissueSampleBean = TissueSampleBeanExtensions.getTissueSample(Hannibal.getInstance(), counter ++);
         }
 
         // ---------------- exception数据的上传  ----------------
-        counter = 1;
-        DiseasedTissueBean diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(this, 0);
+        counter = 0;
+        DiseasedTissueBean diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(Hannibal.getInstance(), 0);
 
         while (diseasedTissueTask != null) {
-            upload(diseasedTissueTask);
-            diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(this, counter ++);
+            new DiseasedTissueTask().execute(diseasedTissueTask);
+            diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(Hannibal.getInstance(), counter ++);
         }
-        return Service.START_STICKY;
-    }
 
-//    @Override
-//    protected void onHandleIntent(Intent intent) {
-//        // ---------------- 埋点数据的上传  ----------------
-//        int counter = 1;
-//        TissueSampleBean tissueSampleBean = TissueSampleBeanExtensions.getTissueSample(this, 0);
-//
-//        while (tissueSampleBean != null) {
-//            upload(tissueSampleBean);
-//            tissueSampleBean = TissueSampleBeanExtensions.getTissueSample(this, counter ++);
-//        }
-//
-//        // ---------------- exception数据的上传  ----------------
-//        counter = 1;
-//        DiseasedTissueBean diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(this, 0);
-//
-//        while (diseasedTissueTask != null) {
-//            upload(diseasedTissueTask);
-//            diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(this, counter ++);
-//        }
-//    }
-
-    private void upload(final TissueSampleBean tissueSampleBean) {
-        HttpManager.getHttpService().uploadTissueSample(tissueSampleBean)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Response<TissueSampleBean>>() {
-
-                    @Override
-                    public void onSubscribe(Subscription s) {
-
-                    }
-
-                    @Override
-                    public void onNext(Response<TissueSampleBean> diseasedTissueBeanResponse) {
-                        TissueSampleBeanExtensions.delete(BiopsyService.this, tissueSampleBean.id);
-                        CommonUtils.printDevLog("发送成功");
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        CommonUtils.printDevLog("发送失败");
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                });
-    }
-
-    private void upload(final DiseasedTissueBean diseasedTissueBean) {
-        HttpManager.getHttpService().uploadDiseasedTissue(diseasedTissueBean)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Response<DiseasedTissueBean>>() {
-
-                    @Override
-                    public void onSubscribe(Subscription s) {
-
-                    }
-
-                    @Override
-                    public void onNext(Response<DiseasedTissueBean> diseasedTissueBeanResponse) {
-                        DiseasedTissueBeanExtensions.delete(BiopsyService.this, diseasedTissueBean.id);
-                        Log.e(DevLogTag, "发送成功");
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        Log.e(DevLogTag, "发送失败");
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                 });
+        isRequesting = false;
     }
 
 }

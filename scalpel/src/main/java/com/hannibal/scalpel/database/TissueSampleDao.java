@@ -17,17 +17,13 @@ public class TissueSampleDao extends DataAccessObject {
 		TissueSampleBean tissueSampleBean = new TissueSampleBean();
 
 		tissueSampleBean.setId(cursor.getInt(cursor.getColumnIndex("ID")));
-		tissueSampleBean.setTaskId(cursor.getString(cursor.getColumnIndex("TaskId")));
-		tissueSampleBean.setExceptionType(cursor.getString(cursor.getColumnIndex("ExceptionType")));
 		tissueSampleBean.setSamplePath(cursor.getString(cursor.getColumnIndex("SamplePath")));
-		tissueSampleBean.setStackTrace(cursor.getString(cursor.getColumnIndex("StackTrace")));
-		tissueSampleBean.setImsiNo(cursor.getString(cursor.getColumnIndex("IMSI")));
+		tissueSampleBean.setImsiNo(cursor.getString(cursor.getColumnIndex("IMEI")));
 		tissueSampleBean.setOsVersion(cursor.getString(cursor.getColumnIndex("OsVersion")));
 		tissueSampleBean.setAppVersion(cursor.getString(cursor.getColumnIndex("APPVersion")));
 		tissueSampleBean.setManufacturer(cursor.getString(cursor.getColumnIndex("Manufacturer")));
 		tissueSampleBean.setModel(cursor.getString(cursor.getColumnIndex("Model")));
 		tissueSampleBean.setNetwork(cursor.getString(cursor.getColumnIndex("Network")));
-		tissueSampleBean.setRemark(cursor.getString(cursor.getColumnIndex("Remark")));
 		tissueSampleBean.setTimestamp(cursor.getString(cursor.getColumnIndex("Timestamp")));
 
 		return tissueSampleBean;

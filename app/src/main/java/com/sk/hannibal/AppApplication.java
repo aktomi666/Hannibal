@@ -3,7 +3,7 @@ package com.sk.hannibal;
 import android.app.Application;
 
 import com.hannibal.scalpel.Hannibal;
-import com.hannibal.scalpel.task.PickOutTask;
+
 
 /**
  * Created by ola_sk on 2018/11/23.

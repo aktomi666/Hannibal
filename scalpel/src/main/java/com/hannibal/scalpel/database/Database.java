@@ -87,7 +87,7 @@ public class Database extends SQLiteOpenHelper {
 					+ "PolicyHolderTel,"
 					+ "Longitude FLOAT,"
 					+ "Latitude FLOAT,"
-					+ "TaskSource INTEGER CHECK(TaskSource>0) NOT NULL)");
+					+ "Timestamp)");
 		
 		// Cursed shitty legacy table table defintion.
 		db.execSQL("CREATE TABLE IF NOT EXISTS " 

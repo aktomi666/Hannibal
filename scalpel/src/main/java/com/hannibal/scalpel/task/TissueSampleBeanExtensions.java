@@ -2,6 +2,7 @@ package com.hannibal.scalpel.task;
 
 import android.content.Context;
 
+import com.hannibal.scalpel.Util.CommonUtils;
 import com.hannibal.scalpel.bean.DiseasedTissueBean;
 import com.hannibal.scalpel.bean.TissueSampleBean;
 import com.hannibal.scalpel.database.DiseasedTissueDao;
@@ -17,7 +18,8 @@ public class TissueSampleBeanExtensions {
 		try {
 			dao = new TissueSampleDao();
 			dao.open(context);
-			dao.create(report);
+			long isSuccess = dao.create(report);
+			CommonUtils.printDevLog(isSuccess+"");
 		} catch (Exception e) {
 			ExceptionsHandlingService.handleException(e);
 		} finally {

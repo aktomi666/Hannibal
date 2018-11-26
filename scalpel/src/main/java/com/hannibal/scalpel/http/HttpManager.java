@@ -5,15 +5,20 @@ import android.util.Log;
 
 import com.hannibal.scalpel.BuildConfig;
 import com.hannibal.scalpel.Constant;
+import com.hannibal.scalpel.Util.Base64;
 import com.hannibal.scalpel.Util.CommonUtils;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class HttpManager {
@@ -32,10 +37,16 @@ public class HttpManager {
                 if (pos > 0) {
                     tempParams.append("&");
                 }
-                tempParams.append(String.format("%s=%s", key,  URLEncoder.encode(paramsMap.get(key),"utf-8")));
+                tempParams.append(String.format("%s=%s", key,  URLEncoder.encode(paramsMap.get(key),"UTF-8")));
                 pos++;
             }
-            String params =tempParams.toString();
+
+            String params = tempParams.toString();
+            //params = Base64.encode(toJson(paramsMap).getBytes());
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("str", paramsMap);
+            params = jsonObject.toString();
+
             // 请求的参数转换为byte数组
             byte[] postData = params.getBytes();
             // 新建一个URL对象
@@ -62,7 +73,17 @@ public class HttpManager {
             urlConn.connect();
             // 发送请求参数
             DataOutputStream dos = new DataOutputStream(urlConn.getOutputStream());
+
             dos.write(postData);
+//            //构建输出流对象，以实现输出序列化的对象
+//            ObjectOutputStream objOut = new ObjectOutputStream(dos);
+//            //向对象输出流写出数据，这些数据将存到内存缓冲区中
+//            objOut.writeChars(params);
+//            //刷新对象输出流，将字节全部写入输出流中
+//            objOut.flush();
+//            //关闭流对象
+//            objOut.close();
+
             dos.flush();
             dos.close();
             // 判断请求是否成功
@@ -116,6 +137,5 @@ public class HttpManager {
             return null;
         }
     }
-
 
 }

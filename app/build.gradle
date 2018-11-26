@@ -9,9 +9,31 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+        release {
+            storeFile file('hannibal.jks')
+            keyPassword 'lj@hannibal'
+            keyAlias "hannibal"
+            storePassword 'lj@hannibal'
+        }
+        debug {
+            storeFile file('hannibal.jks')
+            keyPassword 'lj@hannibal'
+            keyAlias "hannibal"
+            storePassword 'lj@hannibal'
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            shrinkResources true //去除无用资源
+            zipAlignEnabled true
+
+            signingConfig signingConfigs.release
+
+
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

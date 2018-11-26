@@ -19,7 +19,7 @@ public class TissueSampleTask extends AsyncTask<TissueSampleBean, Void, Integer>
         TissueSampleBean tissueSampleBean = tissueSampleBeans[0];
 
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("sample_path", tissueSampleBean.getSamplePath());
+        hashMap.put("tissue_path", tissueSampleBean.getSamplePath());
 
         if (HttpManager.post(hashMap))
             return tissueSampleBean.getId();

@@ -80,6 +80,7 @@ public class BiopsyService {
         DiseasedTissueBean diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(Hannibal.getInstance(), 0);
 
         while (diseasedTissueTask != null) {
+
             new DiseasedTissueTask().execute(diseasedTissueTask);
             diseasedTissueTask = DiseasedTissueBeanExtensions.getDiseasedTissue(Hannibal.getInstance(), counter ++);
         }

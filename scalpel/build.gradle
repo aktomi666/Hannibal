@@ -30,6 +30,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    //阿里云Log
+    implementation 'com.aliyun.openservices:aliyun-log-android-sdk:2.0.0'
 }
 
 task makeJar(type: Copy) {

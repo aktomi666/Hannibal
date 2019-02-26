@@ -1,21 +1,12 @@
 package com.hannibal.scalpel;
 
 import android.app.Application;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkRequest;
-import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
-import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.hannibal.scalpel.Util.CommonUtils;
-import com.hannibal.scalpel.service.BiopsyService;
 import com.hannibal.scalpel.task.ExceptionsHandlingService;
-
-import static com.hannibal.scalpel.Constant.DevLogTag;
 
 public class Hannibal extends Application {
 

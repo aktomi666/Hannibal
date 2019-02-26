@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.TextView;

@@ -15,17 +15,17 @@ import java.util.Locale;
 
 public class PickOutTask {
 
-    private Context context;
+    private static PickOutTask instance;
 
-    public PickOutTask() {
-    }
-
-    public PickOutTask(Context context) {
-        this.context = context;
-    }
-
-    public Context getContext() {
-        return context;
+    public static PickOutTask getInstance() {
+        if (null == instance) {
+            synchronized (PickOutTask.class) {
+                if (null == instance) {
+                    instance = new PickOutTask();
+                }
+            }
+        }
+        return instance;
     }
 
     private DiseasedTissueBean collectDataFromException(Throwable e) {
@@ -71,7 +71,7 @@ public class PickOutTask {
         return report;
     }
 
-    private TissueSampleBean collectDataFromLog(String str) {
+    private static TissueSampleBean collectDataFromLog(String str) {
 
         TissueSampleBean report = new TissueSampleBean();
         report.setType(1);
@@ -91,28 +91,24 @@ public class PickOutTask {
         //report.imsiNo = TelephonyUtils.getInstance(mContext).getImsi(0);
 
 
-        // waiting for redesign.
-		/*HttpResult<WebApiResponse> result = WebApi.executePostJson(WebApi.JLR_CrashReport, report, false, WebApiResponse.class);
-
-		if (AllianzRescueApplication.getInstance() != null && result.getResultType() != HttpResultType.Succeeded) {
-
-			DiseasedTissueBeanExtensions.create(AllianzRescueApplication.getInstance(), report);
-		}*/
-
         return report;
     }
 
     public void collectData(Throwable e) {
         DiseasedTissueBean diseasedTissueBean = collectDataFromException(e);
-        DiseasedTissueBeanExtensions.create(context, diseasedTissueBean);
+        DiseasedTissueBeanExtensions.create(Hannibal.getInstance(), diseasedTissueBean);
+
+        CommonUtils.openService(Hannibal.getInstance(), BiopsyService.class);
     }
 
-    public void collectData(String str) {
+    private void collectData(String str) {
         TissueSampleBean tissueSampleBean = collectDataFromLog(str);
         TissueSampleBeanExtensions.create(Hannibal.getInstance(), tissueSampleBean);
+
+        CommonUtils.openService(Hannibal.getInstance(), BiopsyService.class);
     }
 
-    private String getVersion(String appVersionName) {
+    private static String getVersion(String appVersionName) {
 
         String versionString = null;
         if (TextUtils.isEmpty(appVersionName)) {
@@ -172,12 +168,9 @@ public class PickOutTask {
                         + "/" + (null == v ? "" : v.toString())
                         + "/" + (null == n ? "" : n.toString());
 
-        PickOutTask pickOutTask = new PickOutTask();
-        pickOutTask.collectData(content);
+        CommonUtils.printDevLog(n + " " + v + " " + t);
 
-        BiopsyService biopsyService = new BiopsyService();
-        biopsyService.startPolling();
-        Log.e("hookXM", n + " " + v + " " + t);
+        PickOutTask.getInstance().collectData(content);
     }
 
 }

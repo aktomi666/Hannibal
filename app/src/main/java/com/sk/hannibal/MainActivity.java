@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 
+import com.hannibal.scalpel.Hannibal;
 import com.sk.hannibal.base.BaseActivity;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         super.initView();
-
+        Hannibal.init(this);
         try {
             new OkHttpClient.Builder()
                     .build()
@@ -46,6 +47,7 @@ public class MainActivity extends BaseActivity {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
+                    response = null;
                     Log.i("hi", "code:" + response.code());
                 }
             });

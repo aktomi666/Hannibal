@@ -38,7 +38,7 @@ task makeJar(type: Copy) {
     from('build/intermediates/intermediate-jars/debug')
     into('../app/libs')
     include('classes.jar')
-    rename('classes.jar','hannibal-debug.jar')
+    rename('classes.jar', 'hannibal-debug.jar')
 }
 
 makeJar.dependsOn(build)
@@ -78,21 +78,21 @@ artifacts {
     archives generateSourcesJar
 }
 
-bintray {
-    user = 'magicbaby810' //在个人中心的路径里可以找到
-    key = 'f1cc8626b3d032eaf7828924f56e80e46dd78a27' //上述保存的API key
-    pkg {
-        repo = 'Hannibal' //必须设定一个值，这里选择maven
-        name = 'com.hannibal.scalpel' //必须，包名
-        version {
-            name = '0.0.1' //版本名称
-            desc = 'My test upload' //版本描述
-            released = new Date() //上传过程中如果此处报错，可以注释掉此句
-            vcsTag = '0.0.1' //版本
-        }
-        licenses = ['Apache-2.0'] //开源协议
-        vcsUrl = '' //指定项目git地址
-        websiteUrl = '' //项目官网地址
-    }
-    configurations = ['archives'] //必须为archives
-}
+//bintray {
+//    user = 'magicbaby810' //在个人中心的路径里可以找到
+//    key = 'f1cc8626b3d032eaf7828924f56e80e46dd78a27' //上述保存的API key
+//    pkg {
+//        repo = 'Hannibal' //必须设定一个值，这里选择maven
+//        name = 'com.hannibal.scalpel' //必须，包名
+//        version {
+//            name = '0.0.1' //版本名称
+//            desc = 'My test upload' //版本描述
+//            released = new Date() //上传过程中如果此处报错，可以注释掉此句
+//            vcsTag = '0.0.1' //版本
+//        }
+//        licenses = ['Apache-2.0'] //开源协议
+//        vcsUrl = '' //指定项目git地址
+//        websiteUrl = '' //项目官网地址
+//    }
+//    configurations = ['archives'] //必须为archives
+//}

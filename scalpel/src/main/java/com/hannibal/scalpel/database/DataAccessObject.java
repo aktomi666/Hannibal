@@ -46,7 +46,7 @@ public class DataAccessObject {
 	
 	public void open(Context context) {
 		int a = usageCounter.incrementAndGet();
-		CommonUtils.printDevLog("a:" + a);
+		CommonUtils.printDevLog("open database: " + a);
 		if (database == null) {
 			database = new Database(context);
 		}
@@ -54,7 +54,7 @@ public class DataAccessObject {
 	
 	public void close() {
 		int b = usageCounter.decrementAndGet();
-		CommonUtils.printDevLog("b:" + b);
+		CommonUtils.printDevLog("close database: " + b);
 		if (b <= 0) {
 			if (database != null) {
 				database.close();

@@ -13,7 +13,7 @@ public class DiseasedTissueBeanExtensions {
 	public static void create(Context context, DiseasedTissueBean report) {
 
 		synchronized ("create") {
-			CommonUtils.printDevLog("createTissueSample");
+			CommonUtils.printDevLog("createDiseasedTissue");
 
 			DiseasedTissueDao dao = null;
 			try {
@@ -33,7 +33,7 @@ public class DiseasedTissueBeanExtensions {
 	public static void delete(Context context, int id) {
 
 		synchronized ("delete") {
-			CommonUtils.printDevLog("deleteTissueSample");
+			CommonUtils.printDevLog("deleteDiseasedTissue");
 
 			DiseasedTissueDao dao = null;
 			try {
@@ -53,7 +53,7 @@ public class DiseasedTissueBeanExtensions {
 	public static DiseasedTissueBean getDiseasedTissue(Context context, int offset) {
 
 		synchronized ("get") {
-			CommonUtils.printDevLog("getTissueSample");
+			CommonUtils.printDevLog("getDiseasedTissue");
 
 			DiseasedTissueDao dao = null;
 			try {

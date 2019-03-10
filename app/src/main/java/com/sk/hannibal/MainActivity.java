@@ -33,7 +33,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        Hannibal.init(this);
         try {
             new OkHttpClient.Builder()
                     .build()

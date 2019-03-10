@@ -14,5 +14,6 @@ public class AppApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Hannibal.init(this);
     }
 }

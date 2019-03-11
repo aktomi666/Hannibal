@@ -62,7 +62,7 @@ public class ModifyClassUtil {
 
         public MethodFilterClassVisitor(
                 final ClassVisitor cv, List<Map<String, Object>> methodMatchMaps) {
-            super(Opcodes.ASM4, cv);
+            super(Opcodes.ASM6, cv);
 //            this.className = className;
             this.methodMatchMaps = methodMatchMaps;
         }

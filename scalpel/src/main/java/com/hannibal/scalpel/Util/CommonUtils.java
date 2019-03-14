@@ -141,6 +141,10 @@ public class CommonUtils {
         if (!isServiceRunning(service, context)) {
             Intent intent = new Intent(context, tClass);
             context.startService(intent);
+
+            CommonUtils.printDevLog("BiopsyService start running!");
+        } else {
+            CommonUtils.printDevLog("BiopsyService is running!");
         }
     }
 

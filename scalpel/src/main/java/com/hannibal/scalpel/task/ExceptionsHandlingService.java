@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.hannibal.scalpel.BuildConfig;
 import com.hannibal.scalpel.Constant;
+import com.hannibal.scalpel.Hannibal;
+import com.hannibal.scalpel.Util.CommonUtils;
 
 import org.apache.http.conn.ConnectTimeoutException;
 
@@ -27,7 +29,7 @@ public class ExceptionsHandlingService {
             return;
         }
 
-        if (BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             Log.e(Constant.DevLogTag, exception.getMessage(), exception);
         } else {
             reportExceptionToDatabase(exception);
@@ -63,8 +65,9 @@ public class ExceptionsHandlingService {
      */
     private static void reportExceptionToDatabase(Throwable e) {
 
-        PickOutTask crashReportTask = new PickOutTask();
-        crashReportTask.collectData(e);
+        CommonUtils.printDevLog(null == e ? "e is null" : e.getMessage());
+
+        PickOutTask.getInstance().collectData(e);
     }
 
 }

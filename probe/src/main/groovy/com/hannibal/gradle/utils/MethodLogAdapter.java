@@ -9,7 +9,7 @@ import org.objectweb.asm.Opcodes;
 public class MethodLogAdapter extends MethodVisitor {
 
     public MethodLogAdapter(MethodVisitor mv) {
-        super(Opcodes.ASM4, mv);
+        super(Opcodes.ASM6, mv);
     }
 
     /**

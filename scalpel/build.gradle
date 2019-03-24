@@ -43,6 +43,19 @@ task makeJar(type: Copy) {
 
 makeJar.dependsOn(build)
 
+task genJar(type: Jar, dependsOn: 'makeJar') {
+     from fileTree(dir: 'build/intermediates/classes/release')
+     archiveName = 'hannibal_sdk_unproguard.jar'
+}
+
+task progJar(type: proguard.gradle.ProGuardTask, dependsOn: genJar) {
+     outjars 'build/gp_android_sdk.jar'
+     libraryjars System.getenv("ANDROID_HOME")+"/platforms/android-19/android.jar"
+
+     // 具体需要keep住的类
+     configuration 'sdk_proguard.pro'
+}
+
 
 task generateSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs

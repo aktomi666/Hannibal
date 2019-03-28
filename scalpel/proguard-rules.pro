@@ -32,3 +32,62 @@
 -keep interface * extends java.lang.annotation.Annotation { *; }
 #过滤泛型
 -keepattributes Signature
+-ignorewarnings
+
+-keep public class * extends android.app.Activity      # 保持哪些类不被混淆
+-keep public class * extends android.app.Application   # 保持哪些类不被混淆
+-keep public class * extends android.support.multidex.MultiDexApplication  # 保持哪些类不被混淆
+-keep public class * extends android.app.Service       # 保持哪些类不被混淆
+-keep public class * extends android.content.BroadcastReceiver  # 保持哪些类不被混淆
+-keep public class * extends android.content.ContentProvider    # 保持哪些类不被混淆
+-keep public class * extends android.app.backup.BackupAgentHelper # 保持哪些类不被混淆
+-keep public class * extends android.preference.Preference        # 保持哪些类不被混淆
+-keep public class * extends android.view.View     # 保持哪些类不被混淆
+
+-keep class android.support.** {*;} ## 保留android.support下的所有类及其内部类
+-keep class androidx.** {*;}   ## 保留androidx下的所有类及其内部类
+-keep class com.google.android.material.** {*;}
+
+-keep public class com.android.vending.licensing.ILicensingService
+-keepclasseswithmembernames class * {  # 保持 native 方法不被混淆
+    native <methods>;
+}
+-keepclasseswithmembers class * {   # 保持自定义控件类不被混淆
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+-keepclasseswithmembers class * {# 保持自定义控件类不被混淆
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+-keepclassmembers class * extends android.app.Activity { # 保持自定义控件类不被混淆
+    public void *(android.view.View);
+}
+-keepclassmembers enum * {     # 保持枚举 enum 类不被混淆
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep class * implements android.os.Parcelable { # 保持 Parcelable 不被混淆
+    public static final android.os.Parcelable$Creator *;
+}
+
+-keep class com.hannibal.scalpel.Hannibal
+
+
+#==================gson && protobuf==========================
+-dontwarn com.google.**
+-keep class com.google.gson.** {*;}
+-keep class com.google.protobuf.** {*;}
+
+
+# 阿里云日志  greenDAO
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+    public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+-keep class org.greenrobot.greendao.** { *; }
+-dontwarn org.greenrobot.greendao.database.**
+-dontwarn org.greenrobot.greendao.rx.**
+-dontwarn org.greenrobot.greendao.**
+
+# fastJson
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.** { *; }

@@ -191,12 +191,12 @@ public class CommonUtils {
     public static String[] getNetType(Context paramContext) {
         String[] arrayOfString = {"Unknown", "Unknown"};
         PackageManager localPackageManager = paramContext.getPackageManager();
-        if (localPackageManager.checkPermission("android.permission.ACCESS_NETWORK_STATE", paramContext.getPackageName()) != 0) {
+        if (localPackageManager.checkPermission("android.permission.ACCESS_NETWORK_STATE", paramContext.getPackageName()) != PackageManager.PERMISSION_GRANTED) {
             arrayOfString[0] = "Unknown";
             return arrayOfString;
         }
 
-        ConnectivityManager localConnectivityManager = (ConnectivityManager) paramContext.getSystemService("connectivity");
+        ConnectivityManager localConnectivityManager = (ConnectivityManager) paramContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (localConnectivityManager == null) {
             arrayOfString[0] = "Unknown";
             return arrayOfString;

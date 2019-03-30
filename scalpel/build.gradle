@@ -23,7 +23,9 @@ android {
     }
 
     lintOptions {
+        ignoreWarnings true
         abortOnError false
+        disable 'InvalidPackage'
     }
 }
 
@@ -35,13 +37,26 @@ dependencies {
 }
 
 task makeJar(type: Copy) {
-    from('build/intermediates/intermediate-jars/debug')
+    from('build/intermediates/intermediate-jars/release')
     into('../app/libs')
     include('classes.jar')
     rename('classes.jar', 'hannibal-debug.jar')
 }
 
 makeJar.dependsOn(build)
+
+task genJar(type: Jar, dependsOn: 'build') {
+     from fileTree(dir: 'build/intermediates/classes/release')
+     archiveName = 'hannibal_sdk_unproguard.jar'
+}
+
+task progJar(type: proguard.gradle.ProGuardTask, dependsOn: 'genJar') {
+     injars 'build/intermediates/intermediate-jars/debug/classes.jar'
+     outjars 'build/libs/hannibal-proguard-1.0.0.jar'
+
+     // 具体需要keep住的类
+     configuration 'proguard-rules.pro'
+}
 
 
 task generateSourcesJar(type: Jar) {

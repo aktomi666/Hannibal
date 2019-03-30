@@ -28,5 +28,6 @@ public class AppApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         Hannibal.init(this);
+
     }
 }

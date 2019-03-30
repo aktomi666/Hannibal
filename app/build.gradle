@@ -56,6 +56,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation files('libs/hannibal_sdk_unproguard.jar')
+    implementation files('libs/hannibal-proguard-1.0.0.jar')
 }
 
 apply plugin: 'hannibal'
@@ -73,7 +75,7 @@ hannibal {
     //keepQuiet默认为false,为true时不会有字节码修改的log输出，建议为false
     keepQuiet = false
     //下面的参数设置为true时会输出工程编译耗时信息
-    watchTimeConsume = true
+    watchTimeConsume = false
 
     //this is the most important part
     modifyMatchMaps = [

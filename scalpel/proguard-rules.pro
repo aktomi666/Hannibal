@@ -20,6 +20,11 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+
+-keep class com.hannibal.scalpel.Hannibal {*;}
+-keep class com.hannibal.scalpel.bean.** {*;}
+
+
 -optimizationpasses 5          # 指定代码的压缩级别
 -dontusemixedcaseclassnames   # 是否使用大小写混合
 -dontpreverify           # 混淆时是否做预校验
@@ -32,7 +37,13 @@
 -keep interface * extends java.lang.annotation.Annotation { *; }
 #过滤泛型
 -keepattributes Signature
--ignorewarnings
+# 忽略警告
+-ignorewarning
+#保证是独立的jar,没有任何项目引用,如果不写就会认为我们所有的代码是无用的,从而把所有的代码压缩掉,导出一个空的jar
+-dontshrink
+#表示不跳过library中的非public的类
+-dontskipnonpubliclibraryclasses
+
 
 -keep public class * extends android.app.Activity      # 保持哪些类不被混淆
 -keep public class * extends android.app.Application   # 保持哪些类不被混淆
@@ -68,8 +79,6 @@
 -keep class * implements android.os.Parcelable { # 保持 Parcelable 不被混淆
     public static final android.os.Parcelable$Creator *;
 }
-
--keep class com.hannibal.scalpel.Hannibal
 
 
 #==================gson && protobuf==========================

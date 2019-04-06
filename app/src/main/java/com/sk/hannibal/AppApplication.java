@@ -3,6 +3,7 @@ package com.sk.hannibal;
 import android.app.Application;
 import android.content.Context;
 
+
 import com.hannibal.scalpel.Hannibal;
 
 import java.net.MulticastSocket;
@@ -28,6 +29,5 @@ public class AppApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         Hannibal.init(this);
-
     }
 }

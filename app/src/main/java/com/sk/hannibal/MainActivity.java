@@ -57,6 +57,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.sdsdds)
     public void onClick(View v) {
+        Log.e("ad", "das");
 
     }
 

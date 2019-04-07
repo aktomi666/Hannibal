@@ -8,23 +8,25 @@ import org.gradle.api.execution.TaskExecutionListener
 import org.gradle.api.initialization.Settings
 import org.gradle.api.invocation.Gradle
 import org.gradle.api.tasks.TaskState
-import org.gradle.internal.time.Clock
+
+import java.util.concurrent.TimeUnit
 
 class TimeListener implements TaskExecutionListener, BuildListener {
-    private Clock clock
     private times = []
+    private long startTime
     private long totalTime
 
     @Override
     void beforeExecute(Task task) {
         Log.learn("beforeExecute")
+        startTime = System.nanoTime()
     }
 
     @Override
     void afterExecute(Task task, TaskState taskState) {
-        def ms = clock.currentTime
+        def ms = TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS)
         times.add([ms, task.path])
-        totalTime += ms;
+        totalTime += ms
         Log.info "${task.path} 花费时间 spend ${ms}ms"
     }
 

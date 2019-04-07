@@ -7,6 +7,7 @@ import android.view.View;
 
 
 //import com.hannibal.scalpel.Hannibal;
+import com.hannibal.scalpel.task.PickOutTask;
 import com.sk.hannibal.base.BaseActivity;
 
 import java.io.IOException;
@@ -57,8 +58,8 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.sdsdds)
     public void onClick(View v) {
-        Log.e("ad", "das");
-
+        PickOutTask.hookOnEvents(this, v, "onClick");
+        Log.e("v", "dd");
     }
 
 }

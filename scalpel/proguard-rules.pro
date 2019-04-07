@@ -22,6 +22,7 @@
 
 
 -keep class com.hannibal.scalpel.Hannibal {*;}
+-keep class com.hannibal.scalpel.task.PickOutTask {*;}
 -keep class com.hannibal.scalpel.bean.** {*;}
 
 

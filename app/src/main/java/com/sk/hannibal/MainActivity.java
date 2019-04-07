@@ -58,8 +58,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.sdsdds)
     public void onClick(View v) {
-        PickOutTask.hookOnEvents(this, v, "onClick");
-        Log.e("v", "dd");
+        Log.e("e", "ad");
     }
 
 }

@@ -91,6 +91,16 @@ hannibal {
                                 @Override
                                 void visitCode() {
                                     super.visitCode();
+                                    methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+                                    methodVisitor.visitLdcInsn("========start=========");
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+
+
+                                    methodVisitor.visitLdcInsn(name);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/System", "nanoTime", "()J", false);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/hannibal/scalpel/task/CostTimeTask", "setStartTime", "(Ljava/lang/String;J)V", false);
+
+
                                     methodVisitor.visitVarInsn(25, 0);
                                     methodVisitor.visitVarInsn(25, 1);
                                     //methodVisitor.visitLdcInsn(desc);
@@ -99,23 +109,48 @@ hannibal {
                                     methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
                                             "com/hannibal/scalpel/task/PickOutTask",
                                             "hookOnEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
+
+
+
                                 }
 
+
+//                                @Override
+//                                void visitFieldInsn() {
+//                                    super.visitFieldInsn();
+//                                    methodVisitor.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+//                                    methodVisitor.visitLdcInsn("========start=========");
+//                                    methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+//                                }
 
 
                                 @Override
                                 void visitInsn(int opcode) {
                                     super.visitInsn(opcode)
-                                    if (opcode == Opcodes.RETURN) {
-                                        methodVisitor.visitVarInsn(25, 0);
-                                        methodVisitor.visitVarInsn(25, 1);
-                                        //methodVisitor.visitLdcInsn(desc);
-                                        methodVisitor.visitLdcInsn(name);
-                                        //下面这行代码 为要调用的方法，请酌情修改
-                                        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
-                                                "com/hannibal/scalpel/task/PickOutTask",
-                                                "hookOnEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
-                                    }
+//                                    if (opcode == Opcodes.RETURN) {
+//
+//                                    }
+
+                                    methodVisitor.visitVarInsn(25, 0);
+                                    methodVisitor.visitVarInsn(25, 1);
+                                    //methodVisitor.visitLdcInsn(desc);
+                                    methodVisitor.visitLdcInsn(name);
+                                    //下面这行代码 为要调用的方法，请酌情修改
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                            "com/hannibal/scalpel/task/PickOutTask",
+                                            "hookOnEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
+
+
+                                    methodVisitor.visitLdcInsn(name);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/System", "nanoTime", "()J", false);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/hannibal/scalpel/task/CostTimeTask", "setEndTime", "(Ljava/lang/String;J)V", false);
+                                    methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+                                    methodVisitor.visitLdcInsn(name);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/hannibal/scalpel/task/CostTimeTask", "getCostTime", "(Ljava/lang/String;)Ljava/lang/String;", false);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+                                    methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+                                    methodVisitor.visitLdcInsn("========end=========");
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
                                 }
                             }
                             return adapter;

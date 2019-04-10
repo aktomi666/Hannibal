@@ -2,6 +2,14 @@ package com.sk.hannibal;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.PixelFormat;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import com.hannibal.scalpel.Hannibal;
@@ -18,6 +26,7 @@ import androidx.multidex.MultiDexApplication;
  */
 public class AppApplication extends MultiDexApplication {
 
+    private static AppApplication instance;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -30,4 +39,6 @@ public class AppApplication extends MultiDexApplication {
         super.onCreate();
         Hannibal.init(this);
     }
+
+
 }

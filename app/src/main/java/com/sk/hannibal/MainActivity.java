@@ -2,8 +2,15 @@ package com.sk.hannibal;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
+
+import android.content.Context;
+import android.graphics.PixelFormat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 
 //import com.hannibal.scalpel.Hannibal;
@@ -47,7 +54,6 @@ public class MainActivity extends BaseActivity {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    response = null;
                     Log.i("hi", "code:" + response.code());
                 }
             });

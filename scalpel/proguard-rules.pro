@@ -30,7 +30,7 @@
 -dontusemixedcaseclassnames   # 是否使用大小写混合
 -dontpreverify           # 混淆时是否做预校验
 -verbose                # 混淆时是否记录日志
--keepattributes SourceFile,LineNumberTable # 不混淆日志的line号
+-keepattributes SourceFile,LineNumberTable,Exceptions # 不混淆日志的line号
 -optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*,!code/allocation/variable  # 混淆时所采用的算法
 #过滤注解
 -keepattributes *Annotation*
@@ -43,7 +43,7 @@
 #保证是独立的jar,没有任何项目引用,如果不写就会认为我们所有的代码是无用的,从而把所有的代码压缩掉,导出一个空的jar
 -dontshrink
 #表示不跳过library中的非public的类
--dontskipnonpubliclibraryclasses
+#-dontskipnonpubliclibraryclasses
 
 
 -keep public class * extends android.app.Activity      # 保持哪些类不被混淆
@@ -55,6 +55,8 @@
 -keep public class * extends android.app.backup.BackupAgentHelper # 保持哪些类不被混淆
 -keep public class * extends android.preference.Preference        # 保持哪些类不被混淆
 -keep public class * extends android.view.View     # 保持哪些类不被混淆
+-keep public class * extends android.view.MotionEvent
+-keep public class * extends com.hannibal.scalpel.hook.MotionEventMethodHook
 
 -keep class android.support.** {*;} ## 保留android.support下的所有类及其内部类
 -keep class androidx.** {*;}   ## 保留androidx下的所有类及其内部类
@@ -101,3 +103,20 @@
 # fastJson
 -dontwarn com.alibaba.fastjson.**
 -keep class com.alibaba.fastjson.** { *; }
+
+# epic
+-keep class android.taobao.** { *; }
+-keep class com.taobao.** { *; }
+-keep class me.weishu.epic.art.** { *; }
+
+# delete log in release mode.
+#-assumenosideeffects class com.taobao.android.dexposed.utility.Logger {
+#          public static void i(...);
+#          public static void w(...);
+#          public static void d(...);
+#          public static void e(...);
+#}
+#
+#-assumenosideeffects class com.taobao.android.dexposed.utility.Debug {
+#          public static *** hexdump(...);
+#}

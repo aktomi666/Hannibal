@@ -32,6 +32,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    api 'me.weishu:epic:0.3.6'
     //阿里云Log
     implementation 'com.aliyun.openservices:aliyun-log-android-sdk:2.0.0'
 }

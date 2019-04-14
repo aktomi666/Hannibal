@@ -20,21 +20,7 @@ public class Database extends SQLiteOpenHelper {
 	public static final String DBTABLE_DiseasedTissueTask = "DiseasedTissueInfo";
 	
 	public static final String DBTABLE_TissueSampleTask = "TissueSampleInfo";
-	
-	public static final String DBTABLE_Settings = "AR_Settings"; 
-	
-	public static final String DBTABLE_TempTakenPhoto = "AR_TempTakenPhoto";
-	
-	public static final String DBTABLE_UploadFailedTasks = "UploadFailedFailedTasks";       
-	
-	public static final String DBTABLE_UploadingTask = "UploadingTasks"; 
-	
-	public static final String DBTABLE_TaskLocationHistory = "AR_TaskLocationHistory"; 
-	
-	public static final String DBTABLE_FaultInfo = "FaultInfo";
-	
-	public static final String DBTABLE_ExceptionLog = "ExceptionLog";
-	
+
 	@Override public void onCreate(SQLiteDatabase db) {
 		// Cursed shitty legacy table table defintion.
 		/*
@@ -106,34 +92,6 @@ public class Database extends SQLiteOpenHelper {
 					+ "Longitude,"
 					+ "Latitude," 
 					+ "TaskType)");
-	
-		db.execSQL(String.format("CREATE TABLE IF NOT EXISTS %s (NAME TEXT UNIQUE, VALUE TEXT)", DBTABLE_Settings));
-
-		
-		db.execSQL("CREATE TABLE IF NOT EXISTS " 
-				+ DBTABLE_TaskLocationHistory
-				+ " (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ " RescueTaskId INTEGER, "
-				+ " RescueTaskStepId INTEGER, "
-				+ " Latitude NUMERIC, "
-				+ " Longitude NUMERIC, "
-				+ " ReportTime NUMERIC)");
-		
-		db.execSQL("CREATE TABLE IF NOT EXISTS " 
-				+ DBTABLE_ExceptionLog
-				+ " (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ " TaskId TEXT, "
-				+ " ExceptionType TEXT, "
-				+ " Message TEXT, "
-				+ " StackTrace TEXT, "
-				+ " IMSI TEXT, "
-				+ " APPVersion TEXT, "
-				+ " OsVersion TEXT, "
-				+ " Manufacturer TEXT, "
-				+ " Model TEXT, "
-				+ " Network TEXT, "
-				+ " Remark TEXT, " 
-				+ " Timestamp TEXT)");
 		
 	}
 	

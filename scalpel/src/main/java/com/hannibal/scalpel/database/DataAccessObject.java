@@ -36,12 +36,6 @@ public class DataAccessObject {
 		SQLiteDatabase sqliteDb = getWritableDatabase();
 		sqliteDb.delete(Database.DBTABLE_TissueSampleTask, null, null);
 		sqliteDb.delete(Database.DBTABLE_DiseasedTissueTask, null, null);
-		sqliteDb.delete(Database.DBTABLE_TempTakenPhoto, null, null);
-		sqliteDb.delete(Database.DBTABLE_UploadFailedTasks, null, null);
-		sqliteDb.delete(Database.DBTABLE_UploadingTask, null, null);	
-		sqliteDb.delete(Database.DBTABLE_TaskLocationHistory, null, null);
-		sqliteDb.delete(Database.DBTABLE_Settings, null, null);
-		sqliteDb.delete(Database.DBTABLE_ExceptionLog, null, null);
 	}
 	
 	public void open(Context context) {

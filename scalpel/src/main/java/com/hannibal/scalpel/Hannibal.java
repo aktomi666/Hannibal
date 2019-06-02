@@ -4,12 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import dalvik.system.DexFile;
 
 import com.hannibal.scalpel.Util.CommonUtils;
+import com.hannibal.scalpel.hook.ClickEventMethodHook;
 import com.hannibal.scalpel.hook.MotionEventMethodHook;
 import com.hannibal.scalpel.task.ExceptionsHandlingService;
 import com.taobao.android.dexposed.DexposedBridge;
@@ -38,6 +40,7 @@ public class Hannibal extends Application {
         });
 
         DexposedBridge.findAndHookMethod(ViewGroup.class, "dispatchTouchEvent", MotionEvent.class, new MotionEventMethodHook());
+        DexposedBridge.findAndHookMethod(View.class, "onClick", View.class, new ClickEventMethodHook());
 
         CommonUtils.printDevLog("init hannibal success");
     }

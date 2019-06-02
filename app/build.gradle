@@ -61,7 +61,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-    implementation files('libs/hannibal-proguard-1.0.0.jar')
+    implementation project(path: ':scalpel')
 }
 
 apply plugin: 'hannibal'

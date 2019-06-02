@@ -39,7 +39,7 @@
 #过滤泛型
 -keepattributes Signature
 # 忽略警告
--ignorewarning
+-ignorewarnings
 #保证是独立的jar,没有任何项目引用,如果不写就会认为我们所有的代码是无用的,从而把所有的代码压缩掉,导出一个空的jar
 -dontshrink
 #表示不跳过library中的非public的类
@@ -108,6 +108,8 @@
 -keep class android.taobao.** { *; }
 -keep class com.taobao.** { *; }
 -keep class me.weishu.epic.art.** { *; }
+-keep class com.hannibal.scalpel.hook.** { *; }
+
 
 # delete log in release mode.
 #-assumenosideeffects class com.taobao.android.dexposed.utility.Logger {

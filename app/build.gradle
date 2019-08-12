@@ -51,6 +51,7 @@ android {
         ignoreWarnings true
         abortOnError false
     }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
 dependencies {
@@ -61,7 +62,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-    implementation files('libs/hannibal-proguard-1.0.0.jar')
+    //implementation files('libs/hannibal-proguard-1.0.0.jar')
+    implementation files('libs/hannibal-debug.jar')
 }
 
 apply plugin: 'hannibal'
@@ -69,6 +71,7 @@ import com.hannibal.gradle.utils.MethodLogAdapter
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
+
 //import org.objectweb.asm.*
 
 hannibal {
@@ -134,26 +137,26 @@ hannibal {
                             return adapter;
                     }]
             ]
-//            ,
-//            '*MainActivity': [
-//                    ['methodName': 'onClick', 'methodDesc': null, 'adapter': {
-//                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
-//                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
-//                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
-//                                @Override
-//                                void visitCode() {
-//                                    super.visitCode();
-//                                    //methodVisitor.visitLdcInsn(desc);
-//                                    methodVisitor.visitVarInsn(25, 1);
-//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
-//                                                        "com/hannibal/scalpel/task/PickOutTask",
-//                                                        "hookClickEvents",
-//                                                        "(Landroid/view/View;)V",
-//                                                        false);
-//                                }
-//                            }
-//                            return adapter;
-//                    }]
-//            ]
+            ,
+            '*FontTextView': [
+                    ['methodName': 'dispatchTouchEvent', 'methodDesc': '(Landroid/view/MotionEvent;)Z', 'adapter': {
+                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
+                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
+                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
+                                @Override
+                                void visitCode() {
+                                    super.visitCode();
+                                    //methodVisitor.visitLdcInsn(desc);
+                                    methodVisitor.visitVarInsn(25, 0);
+                                    methodVisitor.visitVarInsn(25, 1);
+                                    methodVisitor.visitLdcInsn(name);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                                        "com/hannibal/scalpel/task/PickOutTask",
+                                                        "hookOnEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
+                                }
+                            }
+                            return adapter;
+                    }]
+            ]
     ]
 }

@@ -37,12 +37,11 @@ dependencies {
 
 
 task makeJar(type: Copy, dependsOn: 'build') {
-    from('build/intermediates/intermediate-jars/release')
-    into('build/libs')
+    from('build/intermediates/packaged-classes/debug')
+    into('libs')
     include('classes.jar')
     rename('classes.jar', 'hannibal-debug.jar')
 }
-makeJar.dependsOn(build)
 
 
 task proguardJar(type: proguard.gradle.ProGuardTask, dependsOn: 'makeJar') {

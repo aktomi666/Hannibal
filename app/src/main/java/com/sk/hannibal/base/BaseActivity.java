@@ -3,10 +3,11 @@ package com.sk.hannibal.base;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.FontCompatActivity;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends FontCompatActivity {
 
     protected abstract int getLayoutId();
 

@@ -37,7 +37,7 @@ public class Hannibal extends Application {
             }
         });
 
-        DexposedBridge.findAndHookMethod(ViewGroup.class, "dispatchTouchEvent", MotionEvent.class, new MotionEventMethodHook());
+        //DexposedBridge.findAndHookMethod(ViewGroup.class, "dispatchTouchEvent", MotionEvent.class, new MotionEventMethodHook());
 
         CommonUtils.printDevLog("init hannibal success");
     }

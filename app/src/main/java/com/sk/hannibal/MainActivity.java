@@ -18,6 +18,7 @@ import com.hannibal.scalpel.task.PickOutTask;
 import com.sk.hannibal.base.BaseActivity;
 
 import java.io.IOException;
+import java.lang.reflect.Proxy;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,6 +66,8 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.sdsdds)
     public void onClick(View v) {
         Log.e("e", "ad");
+
+
     }
 
 }

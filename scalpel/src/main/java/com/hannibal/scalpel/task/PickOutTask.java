@@ -39,7 +39,7 @@ public class PickOutTask {
         }
 
         report.setStackTrace(stackTraceInString);
-        report.setExceptionType(e.getClass().getSimpleName());
+        //report.setExceptionType(e.getClass().getSimpleName());
 
 
 
@@ -58,15 +58,6 @@ public class PickOutTask {
         report.setManufacturer(Build.MANUFACTURER);
         report.setTimestamp(CommonUtils.getCurrentTime(false));
         //report.imsiNo = TelephonyUtils.getInstance(mContext).getImsi(0);
-
-
-        // waiting for redesign.
-		/*HttpResult<WebApiResponse> result = WebApi.executePostJson(WebApi.JLR_CrashReport, report, false, WebApiResponse.class);
-
-		if (AllianzRescueApplication.getInstance() != null && result.getResultType() != HttpResultType.Succeeded) {
-
-			DiseasedTissueBeanExtensions.create(AllianzRescueApplication.getInstance(), report);
-		}*/
 
         return report;
     }

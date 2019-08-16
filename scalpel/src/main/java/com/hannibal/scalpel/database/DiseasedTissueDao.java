@@ -20,7 +20,7 @@ public class DiseasedTissueDao extends DataAccessObject {
 
 		crashReport.setId(cursor.getInt(cursor.getColumnIndex("ID")));
 		crashReport.setTaskId(cursor.getString(cursor.getColumnIndex("TaskId")));
-		crashReport.setExceptionType(cursor.getString(cursor.getColumnIndex("ExceptionType")));
+		//crashReport.setExceptionType(cursor.getString(cursor.getColumnIndex("ExceptionType")));
 		crashReport.setMessage(cursor.getString(cursor.getColumnIndex("Message")));
 		crashReport.setStackTrace(cursor.getString(cursor.getColumnIndex("StackTrace")));
 		crashReport.setImsiNo(cursor.getString(cursor.getColumnIndex("IMSI")));
@@ -39,9 +39,7 @@ public class DiseasedTissueDao extends DataAccessObject {
 
 		ContentValues values = new ContentValues();
 
-		values.put("TaskId", report.getTaskId());
 		values.put("ExceptionType", report.getExceptionType());
-		values.put("Message", report.getMessage());
 		values.put("StackTrace", report.getStackTrace());
 		values.put("IMSI", report.getImsiNo());
 		values.put("OsVersion", report.getOsVersion());

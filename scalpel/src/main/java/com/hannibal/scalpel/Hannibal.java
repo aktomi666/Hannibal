@@ -12,9 +12,6 @@ import dalvik.system.DexFile;
 import com.hannibal.scalpel.Util.CommonUtils;
 import com.hannibal.scalpel.hook.MotionEventMethodHook;
 import com.hannibal.scalpel.task.ExceptionsHandlingService;
-import com.taobao.android.dexposed.DexposedBridge;
-import com.taobao.android.dexposed.XC_MethodHook;
-import com.taobao.android.dexposed.utility.Logger;
 
 public class Hannibal extends Application {
 
@@ -36,8 +33,6 @@ public class Hannibal extends Application {
                 ExceptionsHandlingService.handleException(e);
             }
         });
-
-        //DexposedBridge.findAndHookMethod(ViewGroup.class, "dispatchTouchEvent", MotionEvent.class, new MotionEventMethodHook());
 
         CommonUtils.printDevLog("init hannibal success");
     }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 //import com.hannibal.scalpel.Hannibal;
 import com.hannibal.scalpel.task.PickOutTask;
 import com.sk.hannibal.base.BaseActivity;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.io.IOException;
 import java.lang.reflect.Proxy;
@@ -34,6 +35,11 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.sdsdds)
     AppCompatTextView sss;
 
+
+    public static final String APP_ID = "2882303761517551934";
+    public static final String APP_KEY = "5591755140934";
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -42,6 +48,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         super.initView();
+        MiPushClient.registerPush(this, APP_ID, APP_KEY);
         try {
             new OkHttpClient.Builder()
                     .build()

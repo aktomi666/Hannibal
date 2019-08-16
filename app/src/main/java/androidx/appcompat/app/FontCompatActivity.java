@@ -38,6 +38,7 @@ public class FontCompatActivity extends AppCompatActivity  {
         }
 
         return appCompatDelegate;
+        //return super.getDelegate();
     }
 
     private class CustomCompatDelegate extends AppCompatDelegateImpl {

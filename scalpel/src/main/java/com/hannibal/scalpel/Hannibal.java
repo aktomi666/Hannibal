@@ -12,20 +12,17 @@ import dalvik.system.DexFile;
 import com.hannibal.scalpel.Util.CommonUtils;
 import com.hannibal.scalpel.hook.MotionEventMethodHook;
 import com.hannibal.scalpel.task.ExceptionsHandlingService;
+import com.sk.commons.BaseApplication;
 
-public class Hannibal extends Application {
+/**
+ * @author sk
+ */
+public class Hannibal extends BaseApplication {
 
-    private static Context mContext;
-    private static Hannibal handler = new Hannibal();
-    private static final int JOB_ID = 1000;
 
-    public static Context getInstance() {
-        return mContext;
-    }
-
-    public static void init(Context context) {
-        mContext = context;
-
+    @Override
+    public void onCreate() {
+        super.onCreate();
         // 全局捕获Exce
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override

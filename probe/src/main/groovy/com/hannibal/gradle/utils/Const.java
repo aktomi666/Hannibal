@@ -1,8 +1,5 @@
 package com.hannibal.gradle.utils;
 
-/**
- * Created by bsp on 17/3/6.
- */
 
 public interface Const {
     int MT_FULL = 0;

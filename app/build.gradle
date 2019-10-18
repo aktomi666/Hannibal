@@ -62,9 +62,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-    //implementation files('libs/hannibal-proguard-1.0.0.jar')
-    implementation files('libs/hannibal-debug.jar')
     implementation files('libs/MiPush_SDK_Client_3_2_2.jar')
+    implementation files('libs/scalpel-debug-1.0.0.jar')
 }
 
 apply plugin: 'hannibal'
@@ -112,7 +111,7 @@ hannibal {
                                     //下面这行代码 为要调用的方法，请酌情修改
                                     methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
                                             "com/hannibal/scalpel/task/PickOutTask",
-                                            "hookOnEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
+                                            "hookOnClickEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
 
                                 }
 
@@ -153,7 +152,7 @@ hannibal {
                                     methodVisitor.visitLdcInsn(name);
                                     methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
                                                         "com/hannibal/scalpel/task/PickOutTask",
-                                                        "hookOnEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
+                                                        "hookOnTouchEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
                                 }
                             }
                             return adapter;

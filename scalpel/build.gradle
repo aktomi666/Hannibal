@@ -6,24 +6,27 @@ group = 'com.hannibal.hannibal'
 version = '0.0.1'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            shrinkResources false
+
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+
     }
 
     lintOptions {
-        ignoreWarnings true
         abortOnError false
         disable 'InvalidPackage'
     }
@@ -31,8 +34,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-    implementation 'com.sk.commons:commons:0.0.44'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
 
 
@@ -40,7 +43,7 @@ task makeJar(type: Copy, dependsOn: 'build') {
     from('build/intermediates/packaged-classes/debug')
     into('libs')
     include('classes.jar')
-    rename('classes.jar', 'hannibal-debug.jar')
+    rename('classes.jar', 'scalpel-debug-1.0.0.jar')
 }
 
 

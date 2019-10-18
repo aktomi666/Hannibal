@@ -7,22 +7,28 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.multidex.MultiDexApplication;
+
 import dalvik.system.DexFile;
 
 import com.hannibal.scalpel.Util.CommonUtils;
-import com.hannibal.scalpel.hook.MotionEventMethodHook;
 import com.hannibal.scalpel.task.ExceptionsHandlingService;
-import com.sk.commons.BaseApplication;
 
 /**
  * @author sk
  */
-public class Hannibal extends BaseApplication {
+public class Hannibal {
 
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    private static Context mContext;
+
+    public static Context getInstance() {
+        return mContext;
+    }
+
+    public static void init(Context context) {
+        mContext = context;
+
         // 全局捕获Exce
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override

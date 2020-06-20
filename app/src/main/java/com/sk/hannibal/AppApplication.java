@@ -22,24 +22,17 @@ import com.hannibal.scalpel.Hannibal;
 
 
 /**
- * Created by ola_sk on 2018/11/23.
+ * @author ola_sk on 2018/11/23.
  * Email: magicbaby810@gmail.com
  */
 public class AppApplication extends MultiDexApplication {
 
-    private static AppApplication instance;
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
-    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);
+
         Hannibal.init(this);
     }
-
-
 }

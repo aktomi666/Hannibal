@@ -21,8 +21,7 @@ public class TissueSampleBeanExtensions {
 			try {
 				dao = new TissueSampleDao();
 				dao.open(context);
-				long isSuccess = dao.create(report);
-				CommonUtils.printDevLog(isSuccess+"");
+				dao.create(report);
 			} catch (Exception e) {
 				ExceptionsHandlingService.handleException(e);
 			} finally {

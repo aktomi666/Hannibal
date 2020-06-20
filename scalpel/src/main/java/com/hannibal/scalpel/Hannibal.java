@@ -8,16 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.multidex.MultiDexApplication;
+
 import dalvik.system.DexFile;
 
 import com.hannibal.scalpel.Util.CommonUtils;
 import com.hannibal.scalpel.task.ExceptionsHandlingService;
 
-public class Hannibal extends Application {
+/**
+ * @author sk
+ */
+public class Hannibal {
+
 
     private static Context mContext;
-    private static Hannibal handler = new Hannibal();
-    private static final int JOB_ID = 1000;
 
     public static Context getInstance() {
         return mContext;

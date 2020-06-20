@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import com.hannibal.scalpel.Hannibal;
 import com.hannibal.scalpel.Util.CommonUtils;
@@ -96,7 +99,7 @@ public class PickOutTask {
         TissueSampleBean tissueSampleBean = collectDataFromLog(str);
         TissueSampleBeanExtensions.create(Hannibal.getInstance(), tissueSampleBean);
 
-        CommonUtils.openService(Hannibal.getInstance(), BiopsyService.class);
+        //CommonUtils.openService(Hannibal.getInstance(), BiopsyService.class);
     }
 
     private static String getVersion(String appVersionName) {
@@ -148,16 +151,42 @@ public class PickOutTask {
 
 
     /**
-     * 接收埋点数据
+     * 接收触摸埋点数据
      * @param t
      * @param v
      * @param n
      */
-    public static void hookOnEvents(Object t, Object v, Object n) {
+    public static void hookOnTouchEvents(Object t, Object v, Object n) {
 
         String content = (null == t ? "" : t.toString())
                         + "/" + (null == v ? "" : v.toString())
                         + "/" + (null == n ? "" : n.toString());
+
+        if (t instanceof View) {
+            View view = (View) t;
+            while (null != view.getParent()) {
+                ViewParent viewParent = view.getParent();
+                CommonUtils.printDevLog(viewParent);
+            }
+            view.getParent().getParent().getParent().getParent().getParent()
+        }
+
+        CommonUtils.printDevLog(n + " " + v + " " + t);
+
+        PickOutTask.getInstance().collectData(content);
+    }
+
+    /**
+     * 接收点击埋点数据
+     * @param t
+     * @param v
+     * @param n
+     */
+    public static void hookOnClickEvents(Object t, Object v, Object n) {
+
+        String content = (null == t ? "" : t.toString())
+                + "/" + (null == v ? "" : v.toString())
+                + "/" + (null == n ? "" : n.toString());
 
         CommonUtils.printDevLog(n + " " + v + " " + t);
 

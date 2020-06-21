@@ -84,6 +84,10 @@ hannibal {
     //下面的参数设置为true时会输出工程编译耗时信息
     watchTimeConsume = true
 
+    adjustFlutterBoost = true
+
+    insertClassFullName = ''
+
     //this is the most important part
     modifyMatchMaps = [
             '*Activity|*Receiver|!android*': [

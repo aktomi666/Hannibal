@@ -9,6 +9,7 @@ buildscript {
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.novoda.bintray-release'
 [compileJava, compileTestJava, compileGroovy]*.options*.encoding = 'UTF-8'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -50,4 +51,15 @@ if (project.rootProject.file('local.properties').exists()){
     isHasFile = true
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
     println "1 hasfile:$isHasFile"
+}
+
+
+publish {
+    userOrg = 'magicbaby'//bintray.com用户名
+    repoName = "maven"   //bintray上常见的仓库的名字
+    groupId = 'com.sk.hannibal'//groupId  一般为包名
+    artifactId = 'hannibal'//artifactId 一般为项目名称
+    publishVersion = '1.0.1.2'//版本号
+    desc = ''//描述，不重要
+    website = ''//网站,一般是GitHub的项目地址，一定要是可以访问到的地址
 }

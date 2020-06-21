@@ -3,6 +3,9 @@ package com.hannibal.gradle.utils
 import com.android.build.gradle.BaseExtension
 import com.hannibal.gradle.HannibalParams
 import org.gradle.api.Project
+import org.objectweb.asm.ClassVisitor
+import org.objectweb.asm.MethodVisitor
+import org.objectweb.asm.Opcodes
 
 import java.util.regex.Pattern
 
@@ -44,6 +47,45 @@ public class Util {
                     targetClasses.put(entry.getKey(), type)
                 }
             }
+        }
+    }
+
+    static boolean adjustFlutterBoost(Map<String, Object> modifyMatchMaps) {
+        if (getHannibal().adjustFlutterBoost) {
+            String className = 'com.idlefish.flutterboost.FlutterBoost'
+
+            String insertClassAbsolutePath = className2Path(getHannibal().insertClassFullName)
+
+            def adapter = [
+                    ['methodName': 'createEngine', 'methodDesc': '()Lio/flutter/embedding/engine/FlutterEngine;', 'adapter': {
+                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
+                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
+                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
+
+
+                                @Override
+                                void visitMethodInsn(int opcode, String owner, String name1, String desc1, boolean itf) {
+                                    super.visitMethodInsn(opcode, owner, name1, desc1, itf)
+                                    if (name1.equals("startInitialization")) {
+                                        methodVisitor.visitVarInsn(Opcodes.ALOAD, 0)
+                                        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                                insertClassAbsolutePath,
+                                                "hook",
+                                                "(Ljava/lang/Object;)V",
+                                                false)
+                                    }
+                                }
+
+                                @Override
+                                void visitCode() {
+                                    super.visitCode();
+                                }
+                            }
+                            return adapter
+                    }]
+            ]
+
+            modifyMatchMaps.put(className, adapter)
         }
     }
 
@@ -223,12 +265,7 @@ public class Util {
     public static String getNameFromPath(String path) {
         path.substring(path.lastIndexOf(File.separator) + 1)
     }
-    /**
-     * turn "com.bryansharp.util" to "com/bryansharp/util"
-     *
-     * @param classname full class name
-     * @return class path
-     */
+
     public static String className2Path(String classname) {
         return classname.replace('.', '/');
     }
@@ -240,7 +277,7 @@ public class Util {
     }
 
     public static String shouldModifyClass(String className) {
-        if (getHannibal().enableModify) {
+        if (getHannibal().enable) {
             def set = targetClasses.entrySet();
             for (Map.Entry<String, Integer> entry : set) {
                 def mt = entry.getValue();

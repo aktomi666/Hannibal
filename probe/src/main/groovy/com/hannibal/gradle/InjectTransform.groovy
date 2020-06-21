@@ -55,7 +55,10 @@ public class InjectTransform extends Transform {
         Log.info "==============hannibal ${Util.getHannibal().hannibalModifyName + ' '}transform enter=============="
 //        String flavorAndBuildType = context.name.split("For")[1]
 //        Log.info("flavorAndBuildType ${flavorAndBuildType}")
-        Map<String, Object> modifyMatchMaps = Util.getHannibal().modifyMatchMaps;
+
+        Map<String, Object> modifyMatchMaps = Util.getHannibal().modifyMatchMaps
+        /** 必须在initTargetClasses之前执行 */
+        Util.adjustFlutterBoost(modifyMatchMaps)
         Util.initTargetClasses(modifyMatchMaps)
         /**
          * 获取所有依赖的classPaths,仅做备用

@@ -166,9 +166,9 @@ public class PickOutTask {
             View view = (View) t;
             while (null != view.getParent()) {
                 ViewParent viewParent = view.getParent();
-                CommonUtils.printDevLog(viewParent);
+                //CommonUtils.printDevLog(viewParent);
             }
-            view.getParent().getParent().getParent().getParent().getParent()
+            //view.getParent().getParent().getParent().getParent().getParent()
         }
 
         CommonUtils.printDevLog(n + " " + v + " " + t);

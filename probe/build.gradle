@@ -8,7 +8,7 @@ buildscript {
 }
 apply plugin: 'groovy'
 apply plugin: 'maven'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.novoda.bintray-release'
 [compileJava, compileTestJava, compileGroovy]*.options*.encoding = 'UTF-8'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -33,12 +33,51 @@ uploadArchives {
             name "localRepository"
             dir "localRepository/libs"
         }
+        mavenDeployer {
+            repository(url: uri('../repo-local'))
+        }
     }
 }
-
+//def siteUrl = 'https://github.com/BryanSharp/hibeaver'    // project homepage
+//def gitUrl = 'https://github.com/BryanSharp/hibeaver.git' // project git
+//install {
+//    repositories.mavenInstaller {
+//        // This generates POM.xml with proper parameters
+//        pom {
+//            project {
+//                packaging 'jar'
+//                name 'HiBeaver'
+//                url siteUrl
+//                licenses {
+//                    license {
+//                        name 'The Apache Software License, Version 2.0'
+//                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                    }
+//                }
+//                developers {
+//                    developer {
+//                        id 'BryanSharp'
+//                        name 'BryanSharp'
+//                        email 'bsp0911932@163.com'
+//                    }
+//                }
+//                scm {
+//                    connection gitUrl
+//                    developerConnection gitUrl
+//                    url siteUrl
+//                }
+//            }
+//        }
+//    }
+//}
 task sourcesJar(type: Jar) {
     from project.file('src/main/groovy')
-    classifier = 'sources'
+    archiveClassifier = 'sources'
+}
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
 }
 
 artifacts {
@@ -50,4 +89,28 @@ if (project.rootProject.file('local.properties').exists()){
     isHasFile = true
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
     println "1 hasfile:$isHasFile"
+}
+//bintray {
+//    println "hasfile:$isHasFile"
+//    user = isHasFile ? properties.getProperty("bintray.user") : System.getenv("bintray.user")
+//    key = isHasFile ? properties.getProperty("bintray.apikey") : System.getenv("bintray.apikey")
+//    configurations = ['archives']
+//    pkg {
+//        repo = "maven"
+//        name = "Hannibal"
+//        websiteUrl = siteUrl
+//        vcsUrl = gitUrl
+//        licenses = ["Apache-2.0"]
+//        publish = true
+//    }
+//}
+
+
+publish {
+    userOrg = 'magicbaby'
+    groupId = 'com.sk.hannibal'
+    artifactId = 'hannibal'
+    publishVersion = '1.0'
+    desc = 'Gradle Transform Library'
+    website = ""
 }

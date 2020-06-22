@@ -63,7 +63,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation files('libs/MiPush_SDK_Client_3_2_2.jar')
-    implementation files('libs/scalpel-debug-1.0.0.jar')
+    //implementation files('libs/scalpel-debug-1.0.0.jar')
 }
 
 apply plugin: 'hannibal'

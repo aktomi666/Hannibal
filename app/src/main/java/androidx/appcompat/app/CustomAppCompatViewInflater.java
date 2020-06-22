@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.appcompat.widget.ActionBarContainer;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatCheckBox;
@@ -31,9 +32,9 @@ import androidx.appcompat.widget.ContentFrameLayout;
 import androidx.appcompat.widget.TintContextWrapper;
 import androidx.collection.ArrayMap;
 import androidx.core.view.ViewCompat;
-import androidx.appcompat.R;
 
 import com.hannibal.scalpel.Util.CommonUtils;
+import com.sk.hannibal.R;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -172,7 +173,7 @@ public class CustomAppCompatViewInflater {
             view = createViewFromTag(context, name, attrs);
         }
 
-        CommonUtils.printDevLog(parent + " " + context.getPackageName());
+        CommonUtils.printDevLog(parent + " " + name + " "  + context.getPackageName());
         if (view == null) {
 //            if (parent instanceof ViewGroup) {
 //                view = new CustomViewGroup(context, attrs);

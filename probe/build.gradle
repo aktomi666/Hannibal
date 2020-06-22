@@ -8,6 +8,7 @@ buildscript {
 }
 apply plugin: 'groovy'
 apply plugin: 'maven'
+apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.novoda.bintray-release'
 [compileJava, compileTestJava, compileGroovy]*.options*.encoding = 'UTF-8'
 sourceCompatibility = 1.8
@@ -90,27 +91,14 @@ if (project.rootProject.file('local.properties').exists()){
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
     println "1 hasfile:$isHasFile"
 }
-//bintray {
-//    println "hasfile:$isHasFile"
-//    user = isHasFile ? properties.getProperty("bintray.user") : System.getenv("bintray.user")
-//    key = isHasFile ? properties.getProperty("bintray.apikey") : System.getenv("bintray.apikey")
-//    configurations = ['archives']
-//    pkg {
-//        repo = "maven"
-//        name = "Hannibal"
-//        websiteUrl = siteUrl
-//        vcsUrl = gitUrl
-//        licenses = ["Apache-2.0"]
-//        publish = true
-//    }
-//}
 
 
 publish {
-    userOrg = 'magicbaby'
-    groupId = 'com.sk.hannibal'
-    artifactId = 'hannibal'
-    publishVersion = '1.0'
-    desc = 'Gradle Transform Library'
-    website = ""
+    userOrg = 'magicbaby'//bintray.com用户名
+    repoName = "maven"   //bintray上常见的仓库的名字
+    groupId = 'com.sk.hannibal'//groupId  一般为包名
+    artifactId = 'hannibal'//artifactId 一般为项目名称
+    publishVersion = '1.0.1.2'//版本号
+    desc = ''//描述，不重要
+    website = ''//网站,一般是GitHub的项目地址，一定要是可以访问到的地址
 }

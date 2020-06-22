@@ -108,6 +108,8 @@
 -keep class android.taobao.** { *; }
 -keep class com.taobao.** { *; }
 -keep class me.weishu.epic.art.** { *; }
+-keep class com.hannibal.scalpel.hook.** { *; }
+
 
 # delete log in release mode.
 #-assumenosideeffects class com.taobao.android.dexposed.utility.Logger {

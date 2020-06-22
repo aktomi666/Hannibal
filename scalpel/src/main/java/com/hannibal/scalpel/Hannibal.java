@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -33,7 +34,8 @@ public class Hannibal {
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread t, Throwable e) {
-                ExceptionsHandlingService.handleException(e);
+                e.printStackTrace();
+                //ExceptionsHandlingService.handleException(e);
             }
         });
 

@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 
 //import com.hannibal.scalpel.Hannibal;
-import com.hannibal.scalpel.task.PickOutTask;
 import com.sk.hannibal.base.BaseActivity;
 import com.xiaomi.mipush.sdk.MiPushClient;
 

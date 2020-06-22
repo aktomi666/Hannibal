@@ -73,7 +73,7 @@ class HannibalPluginImpl implements Plugin<Project> {
     }
 
     def static generateTasks(Project project, Map<String, Map<String, Object>> taskMap) {
-        project.task("hannibalModifyFiles") << {
+        project.task("hannibalModifyFiles").doLast {
             ModifyFiles.modify(taskMap)
         }
     }

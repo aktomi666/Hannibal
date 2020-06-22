@@ -12,12 +12,6 @@ public class MethodLogAdapter extends MethodVisitor {
         super(Opcodes.ASM6, mv);
     }
 
-    /**
-     * turn "com.bryansharp.util" to "com/bryansharp/util"
-     *
-     * @param classname full class name
-     * @return class path
-     */
     public static String className2Path(String classname) {
         return classname.replace('.', '/');
     }

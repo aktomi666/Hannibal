@@ -16,7 +16,7 @@ public class ModifyFiles {
 
     public static void modify(Map<String, Map<String, Object>> taskMap) {
         final File tempDir = DataHelper.ext.hannibalTempDir;
-        taskMap.entrySet().forEach({
+        taskMap.entrySet().each {
             entry ->
                 String path = entry.getKey();
                 Map<String, Object> map = entry.getValue();
@@ -32,7 +32,7 @@ public class ModifyFiles {
                         outJar.renameTo(new File(DataHelper.ext.hannibalDir, outJar.getName()))
                         break;
                 }
-        })
+        }
     }
 
     public static File unzipEntryToTemp(ZipEntry element, ZipFile zipFile) {

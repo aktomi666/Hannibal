@@ -66,122 +66,122 @@ dependencies {
     //implementation files('libs/scalpel-debug-1.0.0.jar')
 }
 
-//apply plugin: 'hannibal'
-//import com.hannibal.gradle.utils.MethodLogAdapter
-//import org.objectweb.asm.ClassVisitor
-//import org.objectweb.asm.MethodVisitor
-//import org.objectweb.asm.Opcodes
+apply plugin: 'hannibal'
+import com.hannibal.gradle.utils.MethodLogAdapter
+import org.objectweb.asm.ClassVisitor
+import org.objectweb.asm.MethodVisitor
+import org.objectweb.asm.Opcodes
+
+//import org.objectweb.asm.*
+
+hannibal {
+    //下面这个参数仅仅影响log输出，为本次修改命名，无实际意义，不配置也可以
+    hannibalModifyName = 'Hannibal'
+    //设置为true可以显示帮助内容，默认为true
+    showHelp = true
+    //keepQuiet默认为false,为true时不会有字节码修改的log输出，建议为false
+    keepQuiet = false
+    //下面的参数设置为true时会输出工程编译耗时信息
+    watchTimeConsume = true
+
+    adjustFlutterBoost = true
+
+    insertClassFullName = ''
+
+    //this is the most important part
+    modifyMatchMaps = [
+            '*Activity|*Receiver|!android*': [
+                    ['methodName': 'on**', 'methodDesc': '(Landroid/view/View;)V', 'adapter': {
+                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
+                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
+                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
+                                @Override
+                                void visitCode() {
+                                    super.visitCode();
+                                    methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+                                    methodVisitor.visitLdcInsn("========start=========");
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+
+
+                                    methodVisitor.visitLdcInsn(name);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/System", "nanoTime", "()J", false);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/hannibal/scalpel/task/CostTimeTask", "setStartTime", "(Ljava/lang/String;J)V", false);
+
+
+                                    methodVisitor.visitVarInsn(25, 0);
+                                    methodVisitor.visitVarInsn(25, 1);
+                                    //methodVisitor.visitLdcInsn(desc);
+                                    methodVisitor.visitLdcInsn(name);
+                                    //下面这行代码 为要调用的方法，请酌情修改
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                            "com/hannibal/scalpel/task/PickOutTask",
+                                            "hookOnClickEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
+
+                                }
+
+                                @Override
+                                void visitInsn(int opcode) {
+                                    super.visitInsn(opcode)
+//                                    if (opcode == Opcodes.RETURN) {
 //
-////import org.objectweb.asm.*
-//
-//hannibal {
-//    //下面这个参数仅仅影响log输出，为本次修改命名，无实际意义，不配置也可以
-//    hannibalModifyName = 'Hannibal'
-//    //设置为true可以显示帮助内容，默认为true
-//    showHelp = true
-//    //keepQuiet默认为false,为true时不会有字节码修改的log输出，建议为false
-//    keepQuiet = false
-//    //下面的参数设置为true时会输出工程编译耗时信息
-//    watchTimeConsume = true
-//
-//    adjustFlutterBoost = true
-//
-//    insertClassFullName = ''
-//
-//    //this is the most important part
-//    modifyMatchMaps = [
-//            '*Activity|*Receiver|!android*': [
-//                    ['methodName': 'on**', 'methodDesc': '(Landroid/view/View;)V', 'adapter': {
-//                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
-//                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
-//                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
-//                                @Override
-//                                void visitCode() {
-//                                    super.visitCode();
-//                                    methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-//                                    methodVisitor.visitLdcInsn("========start=========");
-//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
-//
-//
-//                                    methodVisitor.visitLdcInsn(name);
-//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/System", "nanoTime", "()J", false);
-//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/hannibal/scalpel/task/CostTimeTask", "setStartTime", "(Ljava/lang/String;J)V", false);
-//
-//
-//                                    methodVisitor.visitVarInsn(25, 0);
-//                                    methodVisitor.visitVarInsn(25, 1);
-//                                    //methodVisitor.visitLdcInsn(desc);
-//                                    methodVisitor.visitLdcInsn(name);
-//                                    //下面这行代码 为要调用的方法，请酌情修改
-//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
-//                                            "com/hannibal/scalpel/task/PickOutTask",
-//                                            "hookOnClickEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
-//
-//                                }
-//
-//                                @Override
-//                                void visitInsn(int opcode) {
-//                                    super.visitInsn(opcode)
-////                                    if (opcode == Opcodes.RETURN) {
-////
-////                                    }
-//
-//                                    methodVisitor.visitLdcInsn(name);
-//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/System", "nanoTime", "()J", false);
-//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/hannibal/scalpel/task/CostTimeTask", "setEndTime", "(Ljava/lang/String;J)V", false);
-//                                    methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-//                                    methodVisitor.visitLdcInsn(name);
-//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/hannibal/scalpel/task/CostTimeTask", "getCostTime", "(Ljava/lang/String;)Ljava/lang/String;", false);
-//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
-//                                    methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-//                                    methodVisitor.visitLdcInsn("========end=========");
-//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
-//                                }
-//                            }
-//                            return adapter;
-//                    }]
-//            ]
-//            ,
-//            '*View': [
-//                    ['methodName': 'dispatchTouchEvent', 'methodDesc': '(Landroid/view/MotionEvent;)Z', 'adapter': {
-//                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
-//                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
-//                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
-//                                @Override
-//                                void visitCode() {
-//                                    super.visitCode();
-//                                    //methodVisitor.visitLdcInsn(desc);
-//                                    methodVisitor.visitVarInsn(25, 0);
-//                                    methodVisitor.visitVarInsn(25, 1);
-//                                    methodVisitor.visitLdcInsn(name);
-//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
-//                                                        "com/hannibal/scalpel/task/PickOutTask",
-//                                                        "hookOnTouchEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
-//                                }
-//                            }
-//                            return adapter;
-//                    }]
-//            ]
-//            ,
-//            'com.xiaomi.mipush.sdk.u': [
-//                    // you can use javap -s command to get the description of one method
-//                    ['methodName': 'a', 'methodDesc': '(Lorg/apache/thrift/a;Lcom/xiaomi/xmpush/thrift/a;ZLcom/xiaomi/xmpush/thrift/r;)V', 'adapter': {
-//                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
-//                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
-//                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
-//                                @Override
-//                                void visitCode() {
-//                                    super.visitCode();
-//                                    methodVisitor.visitVarInsn(25, 0);
-//                                    methodVisitor.visitVarInsn(25, 1);
-//                                    methodVisitor.visitLdcInsn(name);
-//                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
-//                                            "com/hannibal/scalpel/task/PickOutTask",
-//                                            "hookOnEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
-//                                }
-//                            }
-//                            return adapter;
-//                    }]
-//            ]
-//    ]
-//}
+//                                    }
+
+                                    methodVisitor.visitLdcInsn(name);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/System", "nanoTime", "()J", false);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/hannibal/scalpel/task/CostTimeTask", "setEndTime", "(Ljava/lang/String;J)V", false);
+                                    methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+                                    methodVisitor.visitLdcInsn(name);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "com/hannibal/scalpel/task/CostTimeTask", "getCostTime", "(Ljava/lang/String;)Ljava/lang/String;", false);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+                                    methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+                                    methodVisitor.visitLdcInsn("========end=========");
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+                                }
+                            }
+                            return adapter;
+                    }]
+            ]
+            ,
+            '*View': [
+                    ['methodName': 'dispatchTouchEvent', 'methodDesc': '(Landroid/view/MotionEvent;)Z', 'adapter': {
+                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
+                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
+                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
+                                @Override
+                                void visitCode() {
+                                    super.visitCode();
+                                    //methodVisitor.visitLdcInsn(desc);
+                                    methodVisitor.visitVarInsn(25, 0);
+                                    methodVisitor.visitVarInsn(25, 1);
+                                    methodVisitor.visitLdcInsn(name);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                                        "com/hannibal/scalpel/task/PickOutTask",
+                                                        "hookOnTouchEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
+                                }
+                            }
+                            return adapter;
+                    }]
+            ]
+            ,
+            'com.xiaomi.mipush.sdk.u': [
+                    // you can use javap -s command to get the description of one method
+                    ['methodName': 'a', 'methodDesc': '(Lorg/apache/thrift/a;Lcom/xiaomi/xmpush/thrift/a;ZLcom/xiaomi/xmpush/thrift/r;)V', 'adapter': {
+                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
+                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
+                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
+                                @Override
+                                void visitCode() {
+                                    super.visitCode();
+                                    methodVisitor.visitVarInsn(25, 0);
+                                    methodVisitor.visitVarInsn(25, 1);
+                                    methodVisitor.visitLdcInsn(name);
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                            "com/hannibal/scalpel/task/PickOutTask",
+                                            "hookOnEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
+                                }
+                            }
+                            return adapter;
+                    }]
+            ]
+    ]
+}

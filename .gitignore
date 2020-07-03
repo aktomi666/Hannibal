@@ -32,3 +32,4 @@ captures/
 *.jks
 keystore.properties
 repo-local/
+probe/localRepository/

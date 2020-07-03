@@ -4,7 +4,7 @@ public class HannibalParams {
     String hannibalModifyName = ''
     boolean enable = true
     boolean watchTimeConsume = false
-    boolean keepQuiet = true
+    boolean printLog = false
     boolean showHelp = true
     boolean adjustFlutterBoost = false
     String insertClassFullName = ''

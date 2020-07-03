@@ -35,7 +35,7 @@ class HannibalPluginImpl implements Plugin<Project> {
         }
         initDir(project);
         project.afterEvaluate {
-            Log.setQuiet(project.hannibal.keepQuiet);
+            Log.setQuiet(!project.hannibal.printLog);
             Log.setShowHelp(project.hannibal.showHelp);
             Log.logHelp();
             Map<String, Map<String, Object>> taskMap = project.hannibal.modifyTasks;

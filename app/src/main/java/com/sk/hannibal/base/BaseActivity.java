@@ -7,7 +7,7 @@ import androidx.appcompat.app.FontCompatActivity;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends FontCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int getLayoutId();
 
@@ -24,18 +24,4 @@ public abstract class BaseActivity extends FontCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

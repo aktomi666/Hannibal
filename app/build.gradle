@@ -67,12 +67,8 @@ dependencies {
 }
 
 apply plugin: 'hannibal'
-import com.hannibal.gradle.utils.MethodLogAdapter
-import org.objectweb.asm.ClassVisitor
-import org.objectweb.asm.MethodVisitor
-import org.objectweb.asm.Opcodes
-
-//import org.objectweb.asm.*
+import com.hannibal.gradle.utils.*
+import org.objectweb.asm.*
 
 hannibal {
     //下面这个参数仅仅影响log输出，为本次修改命名，无实际意义，不配置也可以
@@ -179,9 +175,31 @@ hannibal {
                                             "com/hannibal/scalpel/task/PickOutTask",
                                             "hookOnEvents", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V", false);
                                 }
+
                             }
                             return adapter;
                     }]
+            ]
+            ,
+            'com.sk.hannibal.base.BaseActivity' : [
+                    [ 'adapter': {
+                        ClassVisitor cv, int version, int access, String name, String signature, String superName, String[] interfaces ->
+                            ClassVisitor adapter = cv.visit(52, Opcodes.ACC_PUBLIC + Opcodes.ACC_SUPER + Opcodes.ACC_ABSTRACT,
+                                    "com/sk/hannibal/base/BaseActivity", null, "androidx/appcompat/app/FontCompatActivity", null);
+//                            ClassVisitor adapter = new ClassLogAdapter(classVisitor) {
+//
+//                                @Override
+//                                void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+//                                    super.visit(version, access, name, signature, superName, interfaces)
+//
+//                                    classVisitor.visit(52, Opcodes.ACC_PUBLIC + Opcodes.ACC_SUPER + Opcodes.ACC_ABSTRACT,
+//                                            "com/sk/hannibal/base/BaseActivity", null, "androidx/appcompat/app/FontCompatActivity", null);
+//                                }
+//                            }
+                            return adapter;
+                    }
+
+                    ]
             ]
     ]
 }

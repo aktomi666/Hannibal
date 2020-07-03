@@ -114,6 +114,25 @@ public class ModifyClassUtil {
         public void visit(int version, int access, String name,
                           String signature, String superName, String[] interfaces) {
             Log.logEach('* visit *', Log.accCode2String(access), name, signature, superName, interfaces);
+
+
+            methodMatchMaps.each {
+                Map<String, Object> map ->
+                    String metName = map.get(Const.KEY_METHODNAME);
+                    String metMatchType = map.get(Const.KEY_METHODMATCHTYPE);
+                    String methodDesc = map.get(Const.KEY_METHODDESC);
+                    if (Util.isPatternMatch(metName, metMatchType, name)) {
+                        Closure visit = map.get(Const.KEY_ADAPTER);
+                        if (visit != null) {
+
+                        }
+                    }
+            }
+
+            if (name.equals('com/sk/hannibal/base/BaseActivity')) {
+                superName = 'androidx/appcompat/app/FontCompatActivity'
+            }
+
             super.visit(version, access, name, signature, superName, interfaces);
         }
 

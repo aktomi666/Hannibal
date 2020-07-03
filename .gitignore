@@ -31,3 +31,4 @@ captures/
 #Keystorefiles
 *.jks
 keystore.properties
+repo-local/

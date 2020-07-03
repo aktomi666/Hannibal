@@ -73,6 +73,8 @@ public class Util {
                                                 "hook",
                                                 "(Ljava/lang/Object;)V",
                                                 false)
+
+                                        Log.info "============== adjust FlutterBoost success =============="
                                     }
                                 }
 

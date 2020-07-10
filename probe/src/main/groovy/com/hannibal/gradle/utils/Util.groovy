@@ -89,7 +89,42 @@ public class Util {
             ]
 
             modifyMatchMaps.put(className, adapter)
+        } else {
+            adjustFlutter(modifyMatchMaps)
         }
+    }
+
+    static boolean adjustFlutter(Map<String, Object> modifyMatchMaps) {
+        String className = 'io.flutter.view.FlutterMain'
+
+        String insertClassAbsolutePath = className2Path("com.sk.flutterpatch.FlutterPatch")
+
+        def adapter = [
+                ['methodName': 'startInitialization', 'methodDesc': '(Landroid/content/Context;)V', 'adapter': {
+                    ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
+                        MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
+                        MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
+
+                            @Override
+                            void visitInsn(int opcode) {
+                                if (opcode == Opcodes.RETURN) {
+                                    methodVisitor.visitVarInsn(Opcodes.ALOAD, 0)
+                                    methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                            insertClassAbsolutePath,
+                                            "hook",
+                                            "(Ljava/lang/Object;)V",
+                                            false)
+
+                                    Log.info "============== adjust Flutter success =============="
+                                }
+                                super.visitInsn(opcode)
+                            }
+                        }
+                        return adapter
+                }]
+        ]
+
+        modifyMatchMaps.put(className, adapter)
     }
 
     public static boolean regMatch(String pattern, String target) {
@@ -262,7 +297,7 @@ public class Util {
     }
 
     public static String path2Classname(String entryName) {
-        entryName.replace(File.separator, ".").replace(".class", "")
+        entryName.replace("/", ".").replace(".class", "")
     }
 
     public static String getNameFromPath(String path) {

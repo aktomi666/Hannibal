@@ -50,49 +50,49 @@ public class Util {
         }
     }
 
-    static boolean adjustFlutterBoost(Map<String, Object> modifyMatchMaps) {
-        if (getHannibal().adjustFlutterBoost) {
-            String className = 'com.idlefish.flutterboost.FlutterBoost'
-
-            String insertClassAbsolutePath = className2Path("com.sk.flutterpatch.FlutterPatch")
-
-            def adapter = [
-                    ['methodName': 'createEngine', 'methodDesc': '()Lio/flutter/embedding/engine/FlutterEngine;', 'adapter': {
-                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
-                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
-                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
-
-
-                                @Override
-                                void visitMethodInsn(int opcode, String owner, String name1, String desc1, boolean itf) {
-                                    super.visitMethodInsn(opcode, owner, name1, desc1, itf)
-                                    Log.info "============== adjust FlutterBoost success ============== $name1"
-                                    if (name1.equals("startInitialization")) {
-                                        methodVisitor.visitVarInsn(Opcodes.ALOAD, 0)
-                                        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
-                                                insertClassAbsolutePath,
-                                                "hook",
-                                                "(Ljava/lang/Object;)V",
-                                                false)
-
-                                        Log.info "============== adjust FlutterBoost success =============="
-                                    }
-                                }
-
-                                @Override
-                                void visitCode() {
-                                    super.visitCode();
-                                }
-                            }
-                            return adapter
-                    }]
-            ]
-
-            modifyMatchMaps.put(className, adapter)
-        } else {
-            adjustFlutter(modifyMatchMaps)
-        }
-    }
+//    static boolean adjustFlutterBoost(Map<String, Object> modifyMatchMaps) {
+//        if (getHannibal().adjustFlutterBoost) {
+//            String className = 'com.idlefish.flutterboost.FlutterBoost'
+//
+//            String insertClassAbsolutePath = className2Path("com.sk.flutterpatch.FlutterPatch")
+//
+//            def adapter = [
+//                    ['methodName': 'createEngine', 'methodDesc': '()Lio/flutter/embedding/engine/FlutterEngine;', 'adapter': {
+//                        ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
+//                            MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
+//                            MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
+//
+//
+//                                @Override
+//                                void visitMethodInsn(int opcode, String owner, String name1, String desc1, boolean itf) {
+//                                    super.visitMethodInsn(opcode, owner, name1, desc1, itf)
+//                                    Log.info "============== adjust FlutterBoost success ============== $name1"
+//                                    if (name1.equals("startInitialization")) {
+//                                        methodVisitor.visitVarInsn(Opcodes.ALOAD, 0)
+//                                        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+//                                                insertClassAbsolutePath,
+//                                                "hook",
+//                                                "(Ljava/lang/Object;)V",
+//                                                false)
+//
+//                                        Log.info "============== adjust FlutterBoost success =============="
+//                                    }
+//                                }
+//
+//                                @Override
+//                                void visitCode() {
+//                                    super.visitCode();
+//                                }
+//                            }
+//                            return adapter
+//                    }]
+//            ]
+//
+//            modifyMatchMaps.put(className, adapter)
+//        } else {
+//            adjustFlutter(modifyMatchMaps)
+//        }
+//    }
 
     static boolean adjustFlutter(Map<String, Object> modifyMatchMaps) {
         String className = 'io.flutter.view.FlutterMain'

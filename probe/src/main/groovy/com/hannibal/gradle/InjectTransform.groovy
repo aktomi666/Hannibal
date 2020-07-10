@@ -58,7 +58,7 @@ public class InjectTransform extends Transform {
 
         Map<String, Object> modifyMatchMaps = Util.getHannibal().modifyMatchMaps
         /** 必须在initTargetClasses之前执行 */
-        Util.adjustFlutterBoost(modifyMatchMaps)
+        Util.adjustFlutter(modifyMatchMaps)
         Util.initTargetClasses(modifyMatchMaps)
         /**
          * 获取所有依赖的classPaths,仅做备用

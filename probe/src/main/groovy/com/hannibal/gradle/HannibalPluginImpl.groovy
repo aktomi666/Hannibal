@@ -17,7 +17,7 @@ class HannibalPluginImpl implements Plugin<Project> {
         project.extensions.create('hannibal', HannibalParams)
         Util.setProject(project)
         try {
-            if(Class.forName("com.android.build.gradle.BaseExtension")){
+            if (Class.forName("com.android.build.gradle.BaseExtension")) {
                 BaseExtension android = project.extensions.getByType(BaseExtension)
                 if (android instanceof LibraryExtension) {
                     DataHelper.ext.projectType = DataHelper.TYPE_LIB;

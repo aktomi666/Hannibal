@@ -54,7 +54,7 @@ public class Util {
         if (getHannibal().adjustFlutterBoost) {
             String className = 'com.idlefish.flutterboost.FlutterBoost'
 
-            String insertClassAbsolutePath = className2Path(getHannibal().insertClassFullName)
+            String insertClassAbsolutePath = className2Path("com.sk.flutterpatch.FlutterPatch")
 
             def adapter = [
                     ['methodName': 'createEngine', 'methodDesc': '()Lio/flutter/embedding/engine/FlutterEngine;', 'adapter': {
@@ -66,6 +66,7 @@ public class Util {
                                 @Override
                                 void visitMethodInsn(int opcode, String owner, String name1, String desc1, boolean itf) {
                                     super.visitMethodInsn(opcode, owner, name1, desc1, itf)
+                                    Log.info "============== adjust FlutterBoost success ============== $name1"
                                     if (name1.equals("startInitialization")) {
                                         methodVisitor.visitVarInsn(Opcodes.ALOAD, 0)
                                         methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,

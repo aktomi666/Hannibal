@@ -7,7 +7,6 @@ public class HannibalParams {
     boolean printLog = false
     boolean showHelp = true
     boolean adjustFlutterBoost = false
-    String insertClassFullName = ''
     Map<String, Object> modifyMatchMaps = [:]
     Map<String, Map<String, Object>> modifyTasks = [:]
 

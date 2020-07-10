@@ -82,8 +82,6 @@ hannibal {
 
     adjustFlutterBoost = true
 
-    insertClassFullName = ''
-
     //this is the most important part
     modifyMatchMaps = [
             '*Activity|*Receiver|!android*': [

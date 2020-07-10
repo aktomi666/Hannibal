@@ -98,7 +98,7 @@ publish {
     repoName = "maven"   //bintray上常见的仓库的名字
     groupId = 'com.sk.hannibal'//groupId  一般为包名
     artifactId = 'hannibal'//artifactId 一般为项目名称
-    publishVersion = '1.0.1.4'//版本号
+    publishVersion = '1.0.3'//版本号
     desc = ''//描述，不重要
-    website = ''//网站,一般是GitHub的项目地址，一定要是可以访问到的地址
+    website = 'https://github.com/magicbaby810/Hannibal'//网站,一般是GitHub的项目地址，一定要是可以访问到的地址
 }

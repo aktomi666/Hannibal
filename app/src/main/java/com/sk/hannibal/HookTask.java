@@ -18,15 +18,15 @@ import com.hannibal.scalpel.task.TissueSampleBeanExtensions;
 
 import java.util.Locale;
 
-public class PickOutTask {
+public class HookTask {
 
-    private static PickOutTask instance;
+    private static HookTask instance;
 
-    public static PickOutTask getInstance() {
+    public static HookTask getInstance() {
         if (null == instance) {
-            synchronized (PickOutTask.class) {
+            synchronized (HookTask.class) {
                 if (null == instance) {
-                    instance = new PickOutTask();
+                    instance = new HookTask();
                 }
             }
         }
@@ -133,7 +133,7 @@ public class PickOutTask {
 
         StringBuilder stacktraceBuilder = new StringBuilder();
         StackTraceElement[] stacks = e.getStackTrace();
-        String parentPackageName = PickOutTask.class.getPackage().getName();
+        String parentPackageName = HookTask.class.getPackage().getName();
         int lastDotIndex = parentPackageName.lastIndexOf(".");
         parentPackageName = parentPackageName.substring(0, lastDotIndex);
 
@@ -175,7 +175,7 @@ public class PickOutTask {
 
         CommonUtils.printDevLog(n + " " + v + " " + t);
 
-        PickOutTask.getInstance().collectData(content);
+        HookTask.getInstance().collectData(content);
     }
 
     /**
@@ -192,7 +192,7 @@ public class PickOutTask {
 
         CommonUtils.printDevLog(n + " " + v + " " + t);
 
-        PickOutTask.getInstance().collectData(content);
+        HookTask.getInstance().collectData(content);
     }
 
 }

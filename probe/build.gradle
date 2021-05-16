@@ -5,7 +5,7 @@ buildscript {
     }
 }
 apply plugin: 'groovy'
-apply plugin: 'maven'
+//apply plugin: 'maven'
 apply plugin: 'com.github.dcendents.android-maven'
 [compileJava, compileTestJava, compileGroovy]*.options*.encoding = 'UTF-8'
 sourceCompatibility = 1.8
@@ -15,7 +15,7 @@ dependencies {
     implementation localGroovy()
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 //    compile "com.android.tools.build:transform-api:1.5.0"
-    implementation "com.android.tools.build:gradle:3.3.2"
+    implementation "com.android.tools.build:gradle:3.4.3"
     implementation "commons-io:commons-io:2.4"
 }
 repositories {
@@ -23,20 +23,20 @@ repositories {
 }
 group = "com.sk.hannibal"//project属性
 version = "1.0.1"//project属性
-uploadArchives {
-//    version = version + '-SNAPSHOT'//if you are testing the demo I provide locally, you can uncomment this.
-    //本地仓库的一种
-    repositories{
-        flatDir{
-            name "localRepository"
-            dir "localRepository/libs"
-        }
-        mavenDeployer {
-            repository(url: uri('../repo-local'))
-        }
-    }
-}
-
+//uploadArchives {
+////    version = version + '-SNAPSHOT'//if you are testing the demo I provide locally, you can uncomment this.
+//    //本地仓库的一种
+//    repositories{
+//        flatDir{
+//            name "localRepository"
+//            dir "localRepository/libs"
+//        }
+//        mavenDeployer {
+//            repository(url: uri('../repo-local'))
+//        }
+//    }
+//}
+//
 task sourcesJar(type: Jar) {
     from project.file('src/main/groovy')
     archiveClassifier = 'sources'
@@ -50,13 +50,13 @@ tasks.withType(Javadoc) {
 artifacts {
     archives sourcesJar
 }
-Properties properties = new Properties()
-boolean isHasFile = false
-if (project.rootProject.file('local.properties').exists()){
-    isHasFile = true
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    println "1 hasfile:$isHasFile"
-}
+//Properties properties = new Properties()
+//boolean isHasFile = false
+//if (project.rootProject.file('local.properties').exists()){
+//    isHasFile = true
+//    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//    println "1 hasfile:$isHasFile"
+//}
 
 
 //publish {

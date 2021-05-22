@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 
 /**
  * @author liujia on 2019-08-15.
- * @email liujia@olayc.cn
  */
 public class CustomView extends View {
 

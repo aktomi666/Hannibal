@@ -33,7 +33,6 @@ import androidx.appcompat.widget.TintContextWrapper;
 import androidx.collection.ArrayMap;
 import androidx.core.view.ViewCompat;
 
-import com.hannibal.scalpel.Util.CommonUtils;
 import com.sk.hannibal.R;
 
 import java.lang.reflect.Constructor;
@@ -43,7 +42,6 @@ import java.util.Map;
 
 /**
  * @author liujia on 2019-08-12.
- * @email liujia@olayc.cn
  */
 public class CustomAppCompatViewInflater {
 
@@ -173,7 +171,7 @@ public class CustomAppCompatViewInflater {
             view = createViewFromTag(context, name, attrs);
         }
 
-        CommonUtils.printDevLog(parent + " " + name + " "  + context.getPackageName());
+//        CommonUtils.printDevLog(parent + " " + name + " "  + context.getPackageName());
         if (view == null) {
 //            if (parent instanceof ViewGroup) {
 //                view = new CustomViewGroup(context, attrs);

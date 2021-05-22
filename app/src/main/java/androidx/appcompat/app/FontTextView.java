@@ -11,13 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.hannibal.scalpel.task.PickOutTask;
 
 import java.util.PrimitiveIterator;
 
 /**
  * @author liujia on 2019-08-12.
- * @email liujia@olayc.cn
  */
 public class FontTextView extends AppCompatTextView {
 

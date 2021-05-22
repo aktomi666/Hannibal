@@ -13,7 +13,7 @@ import org.gradle.api.Project
 class HannibalPluginImpl implements Plugin<Project> {
     @Override
     void apply(Project project) {
-        println ":applied Hannibal success!"
+        Log.info":applied Hannibal success!"
         project.extensions.create('hannibal', HannibalParams)
         Util.setProject(project)
         try {
@@ -26,6 +26,8 @@ class HannibalPluginImpl implements Plugin<Project> {
                 } else {
                     DataHelper.ext.projectType = -1
                 }
+
+                Log.info"==============hannibal project type ${DataHelper.ext.projectType}"
                 if (DataHelper.ext.projectType != -1) {
                     registerTransform(android)
                 }

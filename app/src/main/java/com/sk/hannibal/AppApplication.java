@@ -18,11 +18,10 @@ import java.net.MulticastSocket;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
-import com.hannibal.scalpel.Hannibal;
 
 
 /**
- * @author ola_sk on 2018/11/23.
+ * @author sk on 2018/11/23.
  * Email: magicbaby810@gmail.com
  */
 public class AppApplication extends MultiDexApplication {
@@ -32,7 +31,5 @@ public class AppApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         MultiDex.install(this);
-
-        Hannibal.init(this);
     }
 }

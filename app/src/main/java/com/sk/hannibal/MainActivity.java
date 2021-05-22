@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 //import com.hannibal.scalpel.Hannibal;
 import com.sk.hannibal.base.BaseActivity;
-import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.io.IOException;
 import java.lang.reflect.Proxy;
@@ -35,9 +34,6 @@ public class MainActivity extends BaseActivity {
     AppCompatTextView sss;
 
 
-    public static final String APP_ID = "2882303761517551934";
-    public static final String APP_KEY = "5591755140934";
-
 
     @Override
     protected int getLayoutId() {
@@ -47,31 +43,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        MiPushClient.registerPush(this, APP_ID, APP_KEY);
-        try {
-            new OkHttpClient.Builder()
-                    .build()
-                    .newCall(new Request.Builder()
-                            .url("http://www.baidu.com")
-                            .build()).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
 
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    Log.i("hi", "code:" + response.code());
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @OnClick(R.id.sdsdds)
     public void onClick(View v) {
-        Log.e("e", "ad");
 
 
     }

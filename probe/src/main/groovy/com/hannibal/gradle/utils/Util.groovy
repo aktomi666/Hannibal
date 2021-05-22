@@ -95,9 +95,91 @@ public class Util {
 //    }
 
     static boolean adjustFlutter(Map<String, Object> modifyMatchMaps) {
-        String className = 'io.flutter.view.FlutterMain'
 
         String insertClassAbsolutePath = className2Path("com.sk.flutterpatch.FlutterPatch")
+
+//      ========================================================================
+
+
+        String useTinkerClassName = 'com.tencent.tinker.lib.tinker.TinkerInstaller'
+
+        def adapter3 = [
+                ['methodName': 'install', 'methodDesc': '(Lcom/tencent/tinker/entry/ApplicationLike;Lcom/tencent/tinker/lib/reporter/LoadReporter;Lcom/tencent/tinker/lib/reporter/PatchReporter;Lcom/tencent/tinker/lib/listener/PatchListener;Ljava/lang/Class;Lcom/tencent/tinker/lib/patch/AbstractPatch;)Lcom/tencent/tinker/lib/tinker/Tinker;', 'adapter': {
+                    ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
+                        MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
+                        MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
+
+                            @Override
+                            void visitCode() {
+                                super.visitCode();
+                                methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                        insertClassAbsolutePath,
+                                        "hookIsUseTinker", "()V", false)
+                            }
+
+                        }
+                        return adapter
+                }]
+        ]
+
+        modifyMatchMaps.put(useTinkerClassName, adapter3)
+
+//      ========================================================================
+
+
+        String useSophixClassName = 'com.taobao.sophix.a.e'
+
+        def adapter2 = [
+                ['methodName': 'initialize', 'methodDesc': '()V', 'adapter': {
+                    ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
+                        MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
+                        MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
+
+                            @Override
+                            void visitCode() {
+                                super.visitCode();
+                                methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                        insertClassAbsolutePath,
+                                        "hookIsUseSophix", "()V", false)
+                            }
+
+                        }
+                        return adapter
+                }]
+        ]
+
+        modifyMatchMaps.put(useSophixClassName, adapter2)
+
+//      ========================================================================
+
+
+        String sophixClassName = 'com.taobao.sophix.a.c'
+
+        def adapter1 = [
+                ['methodName': 'a', 'methodDesc': '(Ljava/lang/String;)V', 'adapter': {
+                    ClassVisitor cv, int access, String name, String desc, String signature, String[] exceptions ->
+                        MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions);
+                        MethodVisitor adapter = new MethodLogAdapter(methodVisitor) {
+
+                            @Override
+                            void visitCode() {
+                                super.visitCode();
+                                methodVisitor.visitVarInsn(Opcodes.ALOAD, 1);
+                                methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                        insertClassAbsolutePath,
+                                        "hookSophix", "(Ljava/lang/Object;)V", false);
+                            }
+                        }
+                        return adapter
+                }]
+        ]
+
+        modifyMatchMaps.put(sophixClassName, adapter1)
+
+//      ========================================================================
+
+
+        String className = 'io.flutter.view.FlutterMain'
 
         def adapter = [
                 ['methodName': 'startInitialization', 'methodDesc': '(Landroid/content/Context;)V', 'adapter': {

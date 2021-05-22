@@ -27,7 +27,6 @@ class HannibalPluginImpl implements Plugin<Project> {
                     DataHelper.ext.projectType = -1
                 }
 
-                Log.info"==============hannibal project type ${DataHelper.ext.projectType}"
                 if (DataHelper.ext.projectType != -1) {
                     registerTransform(android)
                 }
